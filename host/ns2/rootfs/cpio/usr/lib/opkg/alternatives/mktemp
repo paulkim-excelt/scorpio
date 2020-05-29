@@ -1,0 +1,4 @@
+/bin/mktemp
+/bin/busybox.nosuid 50
+/usr/bin/mktemp.coreutils 100
+/bin/mktemp.mktemp 60

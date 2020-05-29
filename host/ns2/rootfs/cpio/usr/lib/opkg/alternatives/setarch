@@ -1,0 +1,2 @@
+/bin/setarch
+/bin/busybox.nosuid 50

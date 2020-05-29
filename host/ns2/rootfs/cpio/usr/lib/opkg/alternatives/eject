@@ -1,0 +1,3 @@
+/usr/bin/eject
+/bin/busybox.nosuid 50
+/usr/bin/eject.util-linux 80

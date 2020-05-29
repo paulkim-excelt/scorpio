@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<brcm_cfg>
+    <comp name="flash_qt">
+        <opt>ENABLE_FLASH_TEST</opt>
+
+        <event>FlashIT_DoneEvent</event>
+        <event>FlashIT_ErrEvent</event>
+
+        <task name="FlashIT1_Task">
+            <priority>2</priority>
+            <autostart>false</autostart>
+            <stack>2048</stack>
+            <event>FlashIT_DoneEvent</event>
+            <event>FlashIT_ErrEvent</event>
+        </task>
+
+        <task name="FlashIT2_Task">
+            <priority>3</priority>
+            <autostart>false</autostart>
+            <stack>2048</stack>
+            <event>FlashIT_DoneEvent</event>
+            <event>FlashIT_ErrEvent</event>
+        </task>
+    </comp>
+</brcm_cfg>

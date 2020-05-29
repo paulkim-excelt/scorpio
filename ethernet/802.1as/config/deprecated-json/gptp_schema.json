@@ -1,0 +1,70 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "dot1asCfg": {
+            "type":"object",
+            "properties":{
+                "globalAdmin": {
+                    "type":"boolean",
+                    "default":true
+                },
+                "clockMode": {
+                    "type":"string",
+                    "enum": ["gm","slave"],
+                    "default":"slave"
+                },
+                "avnuSyncAbsenceTimeout": {
+                    "type":"number",
+                    "minimum":1,
+                    "maximum":20,
+                    "default":10
+                },
+                "gmRateRatio": {
+                    "type":"number",
+                    "minimum":0,
+                    "maximum":4294967295,
+                    "default":1073741824
+                },
+                "intfCfg": {
+                    "type":"array",
+                    "uniqueItems":true,
+                    "items": [
+                    { "$ref": "#/properties/dot1asCfg/definitions/dot1asIntfCfg" },
+                    { "$ref": "#/properties/dot1asCfg/definitions/dot1asIntfCfg" },
+                    { "$ref": "#/properties/dot1asCfg/definitions/dot1asIntfCfg" },
+                    { "$ref": "#/properties/dot1asCfg/definitions/dot1asIntfCfg" },
+                    { "$ref": "#/properties/dot1asCfg/definitions/dot1asIntfCfg" },
+                    { "$ref": "#/properties/dot1asCfg/definitions/dot1asIntfCfg" },
+                    { "$ref": "#/properties/dot1asCfg/definitions/dot1asIntfCfg" },
+                    { "$ref": "#/properties/dot1asCfg/definitions/dot1asIntfCfg" }
+                    ]
+                },
+                "compCfgEnd": {
+                    "type":"boolean",
+                    "default":true
+                }
+            },
+            "required": [ "globalAdmin", "clockMode", "avnuSyncAbsenceTimeout", "gmRateRatio", "intfCfg", "compCfgEnd" ],
+            "definitions": {
+                "dot1asIntfCfg": {
+                    "type": "object",
+                    "properties": {
+                        "hwPortNum": { "type":"number", "uniqueItems":true, "enum":[0, 1, 2, 3, 4, 5, 6, 8] },
+                        "asCapable": { "type":"boolean", "default":true },
+                        "role": { "type":"string", "enum": [ "master","slave","stacking"], "default": "master"},
+                        "initLogPdelayInterval": { "anyOf": [{ "type":"number", "minimum":0, "maximum":0},{ "type":"number", "minimum":127, "maximum":127}]},
+                        "operLogPdelayInterval": { "anyOf": [{ "type":"number", "minimum":0, "maximum":3},{ "type":"number", "minimum":127, "maximum":127}]},
+                        "initLogSyncInterval": { "type":"number", "minimum":-5, "maximum":-3, "default":-5 },
+                        "operLogSyncInterval": { "type":"number", "minimum":-3, "maximum":0, "default":-3 },
+                        "nbrPropDelay": { "type":"number", "minimum":0, "maximum":1000000000, "default":0 },
+                        "nbrRateRatio": { "type":"number", "minimum":0, "maximum":4294967295, "default":1073741824 },
+                        "syncReceiptTimeout": { "type":"number", "minimum":2, "maximum":255, "default":3 },
+                        "allowedLostResp": { "type":"number", "minimum":0, "maximum":65535, "default":3 }
+                    },
+                    "required": ["hwPortNum", "asCapable", "role", "initLogPdelayInterval", "operLogPdelayInterval", "initLogSyncInterval", "operLogSyncInterval", "nbrPropDelay", "nbrRateRatio", "syncReceiptTimeout", "allowedLostResp"]
+                }
+            }
+        }
+    },
+    "required": [ "dot1asCfg" ]
+}

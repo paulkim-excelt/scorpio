@@ -1,0 +1,16 @@
+{
+    "dot1asCfg":{
+        "globalAdmin":true,
+        "clockMode":"gm",
+        "avnuSyncAbsenceTimeout":10,
+        "gmRateRatio":1073741824,
+        "intfCfg":[
+            {"hwPortNum":0,"asCapable":true,"role":"master",
+             "initLogPdelayInterval":0,"operLogPdelayInterval":0,
+             "initLogSyncInterval":-5,"operLogSyncInterval":-3,
+             "nbrPropDelay":2200,"nbrRateRatio":1073741824,
+             "syncReceiptTimeout":3, "allowedLostResp":3}
+            ],
+        "compCfgEnd":true
+    }
+}

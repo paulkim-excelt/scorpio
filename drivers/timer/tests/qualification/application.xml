@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<brcm_cfg>
+    <comp name="timer_qt">
+        <opt>ENABLE_TIMER_SP804</opt>
+        <opt>ENABLE_TIMER_TEST</opt>
+        <interrupt name="TIMER0" function="TIM_0_IRQHandler"/>
+        <interrupt name="TIMER1" function="TIM_1_IRQHandler"/>
+        <event>PeriodicTmrEvent</event>
+        <event>OneShotTmrEvent</event>
+        <event>SytemTmrEvent</event>
+        <task name="TIMERIT_Task">
+            <priority>2</priority>
+            <autostart>false</autostart>
+            <stack>2048</stack>
+            <event>PeriodicTmrEvent</event>
+            <event>OneShotTmrEvent</event>
+            <event>SytemTmrEvent</event>
+        </task>
+    </comp>
+</brcm_cfg>

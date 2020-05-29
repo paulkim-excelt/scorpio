@@ -1,0 +1,2 @@
+/usr/sbin/dnsd
+/bin/busybox.nosuid 50

@@ -1,0 +1,263 @@
+/*****************************************************************************
+ Copyright 2019 Broadcom Limited.  All rights reserved.
+
+ This program is the proprietary software of Broadcom Limited and/or its
+ licensors, and may only be used, duplicated, modified or distributed pursuant
+ to the terms and conditions of a separate, written license agreement executed
+ between you and Broadcom (an "Authorized License").
+
+ Except as set forth in an Authorized License, Broadcom grants no license
+ (express or implied), right to use, or waiver of any kind with respect to the
+ Software, and Broadcom expressly reserves all rights in and to the Software
+ and all intellectual property rights therein.  IF YOU HAVE NO AUTHORIZED
+ LICENSE, THEN YOU HAVE NO RIGHT TO USE THIS SOFTWARE IN ANY WAY, AND SHOULD
+ IMMEDIATELY NOTIFY BROADCOM AND DISCONTINUE ALL USE OF THE SOFTWARE.
+
+  Except as expressly set forth in the Authorized License,
+ 1. This program, including its structure, sequence and organization,
+    constitutes the valuable trade secrets of Broadcom, and you shall use all
+    reasonable efforts to protect the confidentiality thereof, and to use this
+    information only in connection with your use of Broadcom integrated
+    circuit products.
+
+ 2. TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED "AS IS"
+    AND WITH ALL FAULTS AND BROADCOM MAKES NO PROMISES, REPRESENTATIONS OR
+    WARRANTIES, EITHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, WITH RESPECT
+    TO THE SOFTWARE.  BROADCOM SPECIFICALLY DISCLAIMS ANY AND ALL IMPLIED
+    WARRANTIES OF TITLE, MERCHANTABILITY, NONINFRINGEMENT, FITNESS FOR A
+    PARTICULAR PURPOSE, LACK OF VIRUSES, ACCURACY OR COMPLETENESS,
+    QUIET ENJOYMENT, QUIET POSSESSION OR CORRESPONDENCE TO DESCRIPTION.
+    YOU ASSUME THE ENTIRE RISK ARISING OUT OF USE OR PERFORMANCE OF THE
+    SOFTWARE.
+
+ 3. TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL BROADCOM OR ITS
+    LICENSORS BE LIABLE FOR (i) CONSEQUENTIAL, INCIDENTAL, SPECIAL, INDIRECT,
+    OR EXEMPLARY DAMAGES WHATSOEVER ARISING OUT OF OR IN ANY WAY RELATING TO
+    YOUR USE OF OR INABILITY TO USE THE SOFTWARE EVEN IF BROADCOM HAS BEEN
+    ADVISED OF THE POSSIBILITY OF SUCH DAMAGES; OR (ii) ANY AMOUNT IN EXCESS
+    OF THE AMOUNT ACTUALLY PAID FOR THE SOFTWARE ITSELF OR U.S. $1, WHICHEVER
+    IS GREATER. THESE LIMITATIONS SHALL APPLY NOTWITHSTANDING ANY FAILURE OF
+    ESSENTIAL PURPOSE OF ANY LIMITED REMEDY.
+******************************************************************************/
+/**
+    @file spi1_rdb.h
+    @brief RDB File for SPI1
+
+    @version 2019Jan21_rdb
+*/
+
+#ifndef SPI1_RDB_H
+#define SPI1_RDB_H
+
+#include <stdint.h>
+
+#include <compiler.h>
+
+
+typedef uint32_t SPI1_SSPCR0_TYPE;
+#define SPI1_SSPCR0_SCR_MASK (0xff00UL)
+#define SPI1_SSPCR0_SCR_SHIFT (8UL)
+#define SPI1_SSPCR0_SPH_MASK (0x80UL)
+#define SPI1_SSPCR0_SPH_SHIFT (7UL)
+#define SPI1_SSPCR0_SPO_MASK (0x40UL)
+#define SPI1_SSPCR0_SPO_SHIFT (6UL)
+#define SPI1_SSPCR0_FRF_MASK (0x30UL)
+#define SPI1_SSPCR0_FRF_SHIFT (4UL)
+#define SPI1_SSPCR0_DSS_MASK (0xfUL)
+#define SPI1_SSPCR0_DSS_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPCR1_TYPE;
+#define SPI1_SSPCR1_SOD_MASK (0x8UL)
+#define SPI1_SSPCR1_SOD_SHIFT (3UL)
+#define SPI1_SSPCR1_MS_MASK (0x4UL)
+#define SPI1_SSPCR1_MS_SHIFT (2UL)
+#define SPI1_SSPCR1_SSE_MASK (0x2UL)
+#define SPI1_SSPCR1_SSE_SHIFT (1UL)
+
+
+
+
+typedef uint32_t SPI1_SSPDR_TYPE;
+#define SPI1_SSPDR_DATA_MASK (0xffffUL)
+#define SPI1_SSPDR_DATA_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPSR_TYPE;
+#define SPI1_SSPSR_BSY_MASK (0x10UL)
+#define SPI1_SSPSR_BSY_SHIFT (4UL)
+#define SPI1_SSPSR_RFF_MASK (0x8UL)
+#define SPI1_SSPSR_RFF_SHIFT (3UL)
+#define SPI1_SSPSR_RNE_MASK (0x4UL)
+#define SPI1_SSPSR_RNE_SHIFT (2UL)
+#define SPI1_SSPSR_TNF_MASK (0x2UL)
+#define SPI1_SSPSR_TNF_SHIFT (1UL)
+#define SPI1_SSPSR_TFE_MASK (0x1UL)
+#define SPI1_SSPSR_TFE_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPCPSR_TYPE;
+#define SPI1_SSPCPSR_CPSDVSR_MASK (0xffUL)
+#define SPI1_SSPCPSR_CPSDVSR_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPIMSC_TYPE;
+#define SPI1_SSPIMSC_TXIM_MASK (0x8UL)
+#define SPI1_SSPIMSC_TXIM_SHIFT (3UL)
+#define SPI1_SSPIMSC_RXIM_MASK (0x4UL)
+#define SPI1_SSPIMSC_RXIM_SHIFT (2UL)
+#define SPI1_SSPIMSC_RTIM_MASK (0x2UL)
+#define SPI1_SSPIMSC_RTIM_SHIFT (1UL)
+#define SPI1_SSPIMSC_RORIM_MASK (0x1UL)
+#define SPI1_SSPIMSC_RORIM_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPRIS_TYPE;
+#define SPI1_SSPRIS_TXRIS_MASK (0x8UL)
+#define SPI1_SSPRIS_TXRIS_SHIFT (3UL)
+#define SPI1_SSPRIS_RXRIS_MASK (0x4UL)
+#define SPI1_SSPRIS_RXRIS_SHIFT (2UL)
+#define SPI1_SSPRIS_RTRIS_MASK (0x2UL)
+#define SPI1_SSPRIS_RTRIS_SHIFT (1UL)
+#define SPI1_SSPRIS_RORRIS_MASK (0x1UL)
+#define SPI1_SSPRIS_RORRIS_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPMIS_TYPE;
+#define SPI1_SSPMIS_TXMIS_MASK (0x8UL)
+#define SPI1_SSPMIS_TXMIS_SHIFT (3UL)
+#define SPI1_SSPMIS_RXMIS_MASK (0x4UL)
+#define SPI1_SSPMIS_RXMIS_SHIFT (2UL)
+#define SPI1_SSPMIS_RTMIS_MASK (0x2UL)
+#define SPI1_SSPMIS_RTMIS_SHIFT (1UL)
+#define SPI1_SSPMIS_RORMIS_MASK (0x1UL)
+#define SPI1_SSPMIS_RORMIS_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPICR_TYPE;
+#define SPI1_SSPICR_RTIC_MASK (0x2UL)
+#define SPI1_SSPICR_RTIC_SHIFT (1UL)
+#define SPI1_SSPICR_RORIC_MASK (0x1UL)
+#define SPI1_SSPICR_RORIC_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPDMACR_TYPE;
+#define SPI1_SSPDMACR_TXDMAE_MASK (0x2UL)
+#define SPI1_SSPDMACR_TXDMAE_SHIFT (1UL)
+#define SPI1_SSPDMACR_RXDMAE_MASK (0x1UL)
+#define SPI1_SSPDMACR_RXDMAE_SHIFT (0UL)
+
+
+
+
+typedef uint8_t SPI1_RESERVED_TYPE;
+
+
+
+
+typedef uint32_t SPI1_SSPPERIPHID0_TYPE;
+#define SPI1_SSPPERIPHID0_PARTNUMBER0_MASK (0xffUL)
+#define SPI1_SSPPERIPHID0_PARTNUMBER0_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPPERIPHID1_TYPE;
+#define SPI1_SSPPERIPHID1_DESIGNER0_MASK (0xf0UL)
+#define SPI1_SSPPERIPHID1_DESIGNER0_SHIFT (4UL)
+#define SPI1_SSPPERIPHID1_PARTNUMBER1_MASK (0xfUL)
+#define SPI1_SSPPERIPHID1_PARTNUMBER1_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPPERIPHID2_TYPE;
+#define SPI1_SSPPERIPHID2_REVISION_MASK (0xf0UL)
+#define SPI1_SSPPERIPHID2_REVISION_SHIFT (4UL)
+#define SPI1_SSPPERIPHID2_DESIGNER1_MASK (0xfUL)
+#define SPI1_SSPPERIPHID2_DESIGNER1_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPPERIPHID3_TYPE;
+#define SPI1_SSPPERIPHID3_CONFIGURATION_MASK (0xffUL)
+#define SPI1_SSPPERIPHID3_CONFIGURATION_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPPCELLID0_TYPE;
+#define SPI1_SSPPCELLID0_SSPPCELLID0_MASK (0xffUL)
+#define SPI1_SSPPCELLID0_SSPPCELLID0_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPPCELLID1_TYPE;
+#define SPI1_SSPPCELLID1_SSPPCELLID1_MASK (0xffUL)
+#define SPI1_SSPPCELLID1_SSPPCELLID1_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPPCELLID2_TYPE;
+#define SPI1_SSPPCELLID2_SSPPCELLID2_MASK (0xffUL)
+#define SPI1_SSPPCELLID2_SSPPCELLID2_SHIFT (0UL)
+
+
+
+
+typedef uint32_t SPI1_SSPPCELLID3_TYPE;
+#define SPI1_SSPPCELLID3_SSPPCELLID3_MASK (0xffUL)
+#define SPI1_SSPPCELLID3_SSPPCELLID3_SHIFT (0UL)
+
+
+
+
+typedef volatile struct COMP_PACKED _SPI1_RDBType {
+    SPI1_SSPCR0_TYPE sspcr0; /* OFFSET: 0x0 */
+    SPI1_SSPCR1_TYPE sspcr1; /* OFFSET: 0x4 */
+    SPI1_SSPDR_TYPE sspdr; /* OFFSET: 0x8 */
+    SPI1_SSPSR_TYPE sspsr; /* OFFSET: 0xc */
+    SPI1_SSPCPSR_TYPE sspcpsr; /* OFFSET: 0x10 */
+    SPI1_SSPIMSC_TYPE sspimsc; /* OFFSET: 0x14 */
+    SPI1_SSPRIS_TYPE sspris; /* OFFSET: 0x18 */
+    SPI1_SSPMIS_TYPE sspmis; /* OFFSET: 0x1c */
+    SPI1_SSPICR_TYPE sspicr; /* OFFSET: 0x20 */
+    SPI1_SSPDMACR_TYPE sspdmacr; /* OFFSET: 0x24 */
+    SPI1_RESERVED_TYPE rsvd0[4024]; /* OFFSET: 0x28 */
+    SPI1_SSPPERIPHID0_TYPE sspperiphid0; /* OFFSET: 0xfe0 */
+    SPI1_SSPPERIPHID1_TYPE sspperiphid1; /* OFFSET: 0xfe4 */
+    SPI1_SSPPERIPHID2_TYPE sspperiphid2; /* OFFSET: 0xfe8 */
+    SPI1_SSPPERIPHID3_TYPE sspperiphid3; /* OFFSET: 0xfec */
+    SPI1_SSPPCELLID0_TYPE ssppcellid0; /* OFFSET: 0xff0 */
+    SPI1_SSPPCELLID1_TYPE ssppcellid1; /* OFFSET: 0xff4 */
+    SPI1_SSPPCELLID2_TYPE ssppcellid2; /* OFFSET: 0xff8 */
+    SPI1_SSPPCELLID3_TYPE ssppcellid3; /* OFFSET: 0xffc */
+} SPI1_RDBType;
+
+
+#define SPI1_BASE                       (0x40141000UL)
+
+
+
+#define SPI1_MAX_HW_ID                  (1UL)
+
+#endif /* SPI1_RDB_H */

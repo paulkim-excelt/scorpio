@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<brcm_cfg>
+    <comp name="msg_queue_qt">
+        <event>MsgQQT1_TriggerServer</event>
+        <event>MsgQQT1_TriggerClient1</event>
+        <event>MsgQQT1_TriggerClient2</event>
+        <event>MsgQQT2_TriggerServer</event>
+
+        <task name="MsgQQT1_ServerTask">
+            <priority>4</priority>
+            <autostart>false</autostart>
+            <stack>1024</stack>
+            <event>MsgQQT1_TriggerServer</event>
+        </task>
+
+        <task name="MsgQQT1_TaskClient1">
+            <priority>5</priority>
+            <autostart>false</autostart>
+            <stack>1024</stack>
+            <event>MsgQQT1_TriggerClient1</event>
+        </task>
+
+        <task name="MsgQQT1_TaskClient2">
+            <priority>3</priority>
+            <autostart>false</autostart>
+            <stack>1024</stack>
+            <event>MsgQQT1_TriggerClient2</event>
+        </task>
+
+        <task name="MsgQQT2_ServerTask">
+            <priority>4</priority>
+            <autostart>false</autostart>
+            <stack>1024</stack>
+            <event>MsgQQT2_TriggerServer</event>
+        </task>
+
+        <task name="MsgQQT2_TaskClient1">
+            <priority>5</priority>
+            <autostart>false</autostart>
+            <stack>1024</stack>
+        </task>
+
+        <task name="MsgQQT2_TaskClient2">
+            <priority>3</priority>
+            <autostart>false</autostart>
+            <stack>1024</stack>
+        </task>
+    </comp>
+</brcm_cfg>

@@ -1,0 +1,315 @@
+/*****************************************************************************
+ Copyright 2019 Broadcom Limited.  All rights reserved.
+
+ This program is the proprietary software of Broadcom Limited and/or its
+ licensors, and may only be used, duplicated, modified or distributed pursuant
+ to the terms and conditions of a separate, written license agreement executed
+ between you and Broadcom (an "Authorized License").
+
+ Except as set forth in an Authorized License, Broadcom grants no license
+ (express or implied), right to use, or waiver of any kind with respect to the
+ Software, and Broadcom expressly reserves all rights in and to the Software
+ and all intellectual property rights therein.  IF YOU HAVE NO AUTHORIZED
+ LICENSE, THEN YOU HAVE NO RIGHT TO USE THIS SOFTWARE IN ANY WAY, AND SHOULD
+ IMMEDIATELY NOTIFY BROADCOM AND DISCONTINUE ALL USE OF THE SOFTWARE.
+
+  Except as expressly set forth in the Authorized License,
+ 1. This program, including its structure, sequence and organization,
+    constitutes the valuable trade secrets of Broadcom, and you shall use all
+    reasonable efforts to protect the confidentiality thereof, and to use this
+    information only in connection with your use of Broadcom integrated
+    circuit products.
+
+ 2. TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED "AS IS"
+    AND WITH ALL FAULTS AND BROADCOM MAKES NO PROMISES, REPRESENTATIONS OR
+    WARRANTIES, EITHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, WITH RESPECT
+    TO THE SOFTWARE.  BROADCOM SPECIFICALLY DISCLAIMS ANY AND ALL IMPLIED
+    WARRANTIES OF TITLE, MERCHANTABILITY, NONINFRINGEMENT, FITNESS FOR A
+    PARTICULAR PURPOSE, LACK OF VIRUSES, ACCURACY OR COMPLETENESS,
+    QUIET ENJOYMENT, QUIET POSSESSION OR CORRESPONDENCE TO DESCRIPTION.
+    YOU ASSUME THE ENTIRE RISK ARISING OUT OF USE OR PERFORMANCE OF THE
+    SOFTWARE.
+
+ 3. TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL BROADCOM OR ITS
+    LICENSORS BE LIABLE FOR (i) CONSEQUENTIAL, INCIDENTAL, SPECIAL, INDIRECT,
+    OR EXEMPLARY DAMAGES WHATSOEVER ARISING OUT OF OR IN ANY WAY RELATING TO
+    YOUR USE OF OR INABILITY TO USE THE SOFTWARE EVEN IF BROADCOM HAS BEEN
+    ADVISED OF THE POSSIBILITY OF SUCH DAMAGES; OR (ii) ANY AMOUNT IN EXCESS
+    OF THE AMOUNT ACTUALLY PAID FOR THE SOFTWARE ITSELF OR U.S. $1, WHICHEVER
+    IS GREATER. THESE LIMITATIONS SHALL APPLY NOTWITHSTANDING ANY FAILURE OF
+    ESSENTIAL PURPOSE OF ANY LIMITED REMEDY.
+******************************************************************************/
+/**
+    @file dmu_rdb.h
+    @brief RDB File for DMU
+
+    @version 2019Jan21_rdb
+*/
+
+#ifndef DMU_RDB_H
+#define DMU_RDB_H
+
+#include <stdint.h>
+
+#include <compiler.h>
+
+
+typedef uint8_t DMU_RESERVED_TYPE;
+
+
+
+
+typedef uint32_t DMU_STATUS_TYPE;
+#define DMU_STATUS_CLK_SEL_BUSY_MASK (0x10UL)
+#define DMU_STATUS_CLK_SEL_BUSY_SHIFT (4UL)
+
+
+
+
+typedef uint32_t DMU_CLK_SEL_TYPE;
+#define DMU_CLK_SEL_PCLK_SEL_MASK (0xc0UL)
+#define DMU_CLK_SEL_PCLK_SEL_SHIFT (6UL)
+#define DMU_CLK_SEL_HCLK_SEL_MASK (0x30UL)
+#define DMU_CLK_SEL_HCLK_SEL_SHIFT (4UL)
+#define DMU_CLK_SEL_QCLK_SEL_MASK (0xcUL)
+#define DMU_CLK_SEL_QCLK_SEL_SHIFT (2UL)
+#define DMU_CLK_SEL_CPUCLK_SEL_MASK (0x3UL)
+#define DMU_CLK_SEL_CPUCLK_SEL_SHIFT (0UL)
+
+
+
+
+typedef uint32_t DMU_CLKOUT_SEL_TYPE;
+#define DMU_CLKOUT_SEL_CLKOUT0_SCALAR_MASK (0xffc0UL)
+#define DMU_CLKOUT_SEL_CLKOUT0_SCALAR_SHIFT (6UL)
+#define DMU_CLKOUT_SEL_CLKOUT0_SEL_MASK (0x3cUL)
+#define DMU_CLKOUT_SEL_CLKOUT0_SEL_SHIFT (2UL)
+#define DMU_CLKOUT_SEL_CLKOUT0_DATA_MASK (0x2UL)
+#define DMU_CLKOUT_SEL_CLKOUT0_DATA_SHIFT (1UL)
+
+
+
+
+typedef uint32_t DMU_TIMER_ENABLE_SEL_TYPE;
+#define DMU_TIMER_ENABLE_SEL_WDT_ENABLE_PCLK_MASK (0x20UL)
+#define DMU_TIMER_ENABLE_SEL_WDT_ENABLE_PCLK_SHIFT (5UL)
+#define DMU_TIMER_ENABLE_SEL_TIM_REFCLK_SEL_MASK (0x4UL)
+#define DMU_TIMER_ENABLE_SEL_TIM_REFCLK_SEL_SHIFT (2UL)
+#define DMU_TIMER_ENABLE_SEL_TIM_ENABLE_PCLK_MASK (0x1UL)
+#define DMU_TIMER_ENABLE_SEL_TIM_ENABLE_PCLK_SHIFT (0UL)
+
+
+
+
+typedef uint32_t DMU_PM_TYPE;
+#define DMU_PM_DEEPSLEEP_TIMEOUT_MASK (0xffffffffUL)
+#define DMU_PM_DEEPSLEEP_TIMEOUT_SHIFT (0UL)
+
+
+
+
+typedef uint32_t DMU_PWD_BLK1_TYPE;
+#define DMU_PWD_BLK1_SCI0_MASK (0x80000000UL)
+#define DMU_PWD_BLK1_SCI0_SHIFT (31UL)
+#define DMU_PWD_BLK1_ROM_MASK (0x40000000UL)
+#define DMU_PWD_BLK1_ROM_SHIFT (30UL)
+#define DMU_PWD_BLK1_RNG_MASK (0x20000000UL)
+#define DMU_PWD_BLK1_RNG_SHIFT (29UL)
+#define DMU_PWD_BLK1_PWM_MASK (0x10000000UL)
+#define DMU_PWD_BLK1_PWM_SHIFT (28UL)
+#define DMU_PWD_BLK1_PKA_MASK (0x8000000UL)
+#define DMU_PWD_BLK1_PKA_SHIFT (27UL)
+#define DMU_PWD_BLK1_PBZ_MASK (0x4000000UL)
+#define DMU_PWD_BLK1_PBZ_SHIFT (26UL)
+#define DMU_PWD_BLK1_PBY_MASK (0x2000000UL)
+#define DMU_PWD_BLK1_PBY_SHIFT (25UL)
+#define DMU_PWD_BLK1_PBX_MASK (0x1000000UL)
+#define DMU_PWD_BLK1_PBX_SHIFT (24UL)
+#define DMU_PWD_BLK1_ODMA_MASK (0x800000UL)
+#define DMU_PWD_BLK1_ODMA_SHIFT (23UL)
+#define DMU_PWD_BLK1_NVM_MASK (0x400000UL)
+#define DMU_PWD_BLK1_NVM_SHIFT (22UL)
+#define DMU_PWD_BLK1_MSR_MASK (0x200000UL)
+#define DMU_PWD_BLK1_MSR_SHIFT (21UL)
+#define DMU_PWD_BLK1_MMI_MASK (0x100000UL)
+#define DMU_PWD_BLK1_MMI_SHIFT (20UL)
+#define DMU_PWD_BLK1_MEM_MASK (0x80000UL)
+#define DMU_PWD_BLK1_MEM_SHIFT (19UL)
+#define DMU_PWD_BLK1_LCD_MASK (0x40000UL)
+#define DMU_PWD_BLK1_LCD_SHIFT (18UL)
+#define DMU_PWD_BLK1_I2S_MASK (0x20000UL)
+#define DMU_PWD_BLK1_I2S_SHIFT (17UL)
+#define DMU_PWD_BLK1_I2C1_MASK (0x10000UL)
+#define DMU_PWD_BLK1_I2C1_SHIFT (16UL)
+#define DMU_PWD_BLK1_I2C0_MASK (0x8000UL)
+#define DMU_PWD_BLK1_I2C0_SHIFT (15UL)
+#define DMU_PWD_BLK1_GIO4_MASK (0x4000UL)
+#define DMU_PWD_BLK1_GIO4_SHIFT (14UL)
+#define DMU_PWD_BLK1_GIO3_MASK (0x2000UL)
+#define DMU_PWD_BLK1_GIO3_SHIFT (13UL)
+#define DMU_PWD_BLK1_GIO2_MASK (0x1000UL)
+#define DMU_PWD_BLK1_GIO2_SHIFT (12UL)
+#define DMU_PWD_BLK1_GIO1_MASK (0x800UL)
+#define DMU_PWD_BLK1_GIO1_SHIFT (11UL)
+#define DMU_PWD_BLK1_GIO0_MASK (0x400UL)
+#define DMU_PWD_BLK1_GIO0_SHIFT (10UL)
+#define DMU_PWD_BLK1_ETM_MASK (0x200UL)
+#define DMU_PWD_BLK1_ETM_SHIFT (9UL)
+#define DMU_PWD_BLK1_ETH_MASK (0x100UL)
+#define DMU_PWD_BLK1_ETH_SHIFT (8UL)
+#define DMU_PWD_BLK1_DEC_MASK (0x80UL)
+#define DMU_PWD_BLK1_DEC_SHIFT (7UL)
+#define DMU_PWD_BLK1_DDR_MASK (0x40UL)
+#define DMU_PWD_BLK1_DDR_SHIFT (6UL)
+#define DMU_PWD_BLK1_DAC_MASK (0x20UL)
+#define DMU_PWD_BLK1_DAC_SHIFT (5UL)
+#define DMU_PWD_BLK1_D1W_MASK (0x10UL)
+#define DMU_PWD_BLK1_D1W_SHIFT (4UL)
+#define DMU_PWD_BLK1_CFG_MASK (0x8UL)
+#define DMU_PWD_BLK1_CFG_SHIFT (3UL)
+#define DMU_PWD_BLK1_BBL_MASK (0x4UL)
+#define DMU_PWD_BLK1_BBL_SHIFT (2UL)
+#define DMU_PWD_BLK1_ADC1_MASK (0x2UL)
+#define DMU_PWD_BLK1_ADC1_SHIFT (1UL)
+#define DMU_PWD_BLK1_ADC0_MASK (0x1UL)
+#define DMU_PWD_BLK1_ADC0_SHIFT (0UL)
+
+
+
+
+typedef uint32_t DMU_PWD_BLK2_TYPE;
+#define DMU_PWD_BLK2_RAM_MASK (0x4000000UL)
+#define DMU_PWD_BLK2_RAM_SHIFT (26UL)
+#define DMU_PWD_BLK2_WDT_MASK (0x2000000UL)
+#define DMU_PWD_BLK2_WDT_SHIFT (25UL)
+#define DMU_PWD_BLK2_USB2_MASK (0x1000000UL)
+#define DMU_PWD_BLK2_USB2_SHIFT (24UL)
+#define DMU_PWD_BLK2_USB1_MASK (0x800000UL)
+#define DMU_PWD_BLK2_USB1_SHIFT (23UL)
+#define DMU_PWD_BLK2_USB0_MASK (0x400000UL)
+#define DMU_PWD_BLK2_USB0_SHIFT (22UL)
+#define DMU_PWD_BLK2_URT3_MASK (0x200000UL)
+#define DMU_PWD_BLK2_URT3_SHIFT (21UL)
+#define DMU_PWD_BLK2_URT2_MASK (0x100000UL)
+#define DMU_PWD_BLK2_URT2_SHIFT (20UL)
+#define DMU_PWD_BLK2_URT1_MASK (0x80000UL)
+#define DMU_PWD_BLK2_URT1_SHIFT (19UL)
+#define DMU_PWD_BLK2_URT0_MASK (0x40000UL)
+#define DMU_PWD_BLK2_URT0_SHIFT (18UL)
+#define DMU_PWD_BLK2_UMC_MASK (0x20000UL)
+#define DMU_PWD_BLK2_UMC_SHIFT (17UL)
+#define DMU_PWD_BLK2_TPB_MASK (0x10000UL)
+#define DMU_PWD_BLK2_TPB_SHIFT (16UL)
+#define DMU_PWD_BLK2_TIM4_MASK (0x8000UL)
+#define DMU_PWD_BLK2_TIM4_SHIFT (15UL)
+#define DMU_PWD_BLK2_TIM3_MASK (0x4000UL)
+#define DMU_PWD_BLK2_TIM3_SHIFT (14UL)
+#define DMU_PWD_BLK2_TIM2_MASK (0x2000UL)
+#define DMU_PWD_BLK2_TIM2_SHIFT (13UL)
+#define DMU_PWD_BLK2_TIM1_MASK (0x1000UL)
+#define DMU_PWD_BLK2_TIM1_SHIFT (12UL)
+#define DMU_PWD_BLK2_TIM0_MASK (0x800UL)
+#define DMU_PWD_BLK2_TIM0_SHIFT (11UL)
+#define DMU_PWD_BLK2_SPL_MASK (0x400UL)
+#define DMU_PWD_BLK2_SPL_SHIFT (10UL)
+#define DMU_PWD_BLK2_QSPI_MASK (0x200UL)
+#define DMU_PWD_BLK2_QSPI_SHIFT (9UL)
+#define DMU_PWD_BLK2_SPI2_MASK (0x100UL)
+#define DMU_PWD_BLK2_SPI2_SHIFT (8UL)
+#define DMU_PWD_BLK2_SPI1_MASK (0x80UL)
+#define DMU_PWD_BLK2_SPI1_SHIFT (7UL)
+#define DMU_PWD_BLK2_SPI0_MASK (0x40UL)
+#define DMU_PWD_BLK2_SPI0_SHIFT (6UL)
+#define DMU_PWD_BLK2_SMU_MASK (0x20UL)
+#define DMU_PWD_BLK2_SMU_SHIFT (5UL)
+#define DMU_PWD_BLK2_SMC_MASK (0x10UL)
+#define DMU_PWD_BLK2_SMC_SHIFT (4UL)
+#define DMU_PWD_BLK2_SDMA_MASK (0x8UL)
+#define DMU_PWD_BLK2_SDMA_SHIFT (3UL)
+#define DMU_PWD_BLK2_SDM1_MASK (0x4UL)
+#define DMU_PWD_BLK2_SDM1_SHIFT (2UL)
+#define DMU_PWD_BLK2_SDM0_MASK (0x2UL)
+#define DMU_PWD_BLK2_SDM0_SHIFT (1UL)
+#define DMU_PWD_BLK2_SCI1_MASK (0x1UL)
+#define DMU_PWD_BLK2_SCI1_SHIFT (0UL)
+
+
+
+
+typedef volatile struct COMP_PACKED _DMU_RDBType {
+    DMU_RESERVED_TYPE rsvd0[64]; /* OFFSET: 0x0 */
+    DMU_STATUS_TYPE status; /* OFFSET: 0x40 */
+    DMU_CLK_SEL_TYPE clk_sel; /* OFFSET: 0x44 */
+    DMU_CLKOUT_SEL_TYPE clkout_sel; /* OFFSET: 0x48 */
+    DMU_TIMER_ENABLE_SEL_TYPE timer_enable_sel; /* OFFSET: 0x4c */
+    DMU_PM_TYPE pm; /* OFFSET: 0x50 */
+    DMU_RESERVED_TYPE rsvd1[108]; /* OFFSET: 0x54 */
+    DMU_PWD_BLK1_TYPE pwd_blk1; /* OFFSET: 0xc0 */
+    DMU_PWD_BLK2_TYPE pwd_blk2; /* OFFSET: 0xc4 */
+} DMU_RDBType;
+
+
+#define DMU_BASE                        (0x40146000UL)
+
+
+
+#define DMU_MAX_HW_ID                   (1UL)
+
+
+#define REF_CLOCK                       (25000000UL)
+
+
+#define TOP_PLL_CLOCK                   (400000000UL)
+
+
+#define TOP_SPI_ROOT_CLOCK              (250000000UL)
+
+
+#define TIMER_CLOCK                     (REF_CLOCK/4UL)
+
+
+#define DMU_CPUCLK_SRC_REFCLK_VAL       (0x0UL)
+
+
+#define DMU_CPUCLK_SRC_TOP_PLL_VAL      (0x1UL)
+
+
+#define DMU_CPUCLK_SRC_TOP_PLL_BY_2_VAL  (0x2UL)
+
+
+#define DMU_CPUCLK_SRC_TOP_PLL_BY_4_VAL  (0x3UL)
+
+
+#define DMU_HCLK_DIV_1_VAL              (0x0UL)
+
+
+#define DMU_HCLK_DIV_2_VAL              (0x1UL)
+
+
+#define DMU_HCLK_DIV_3_VAL              (0x2UL)
+
+
+#define DMU_HCLK_DIV_4_VAL              (0x3UL)
+
+
+#define DMU_PCLK_DIV_1_VAL              (0x0UL)
+
+
+#define DMU_PCLK_DIV_2_VAL              (0x1UL)
+
+
+#define DMU_PCLK_DIV_3_VAL              (0x2UL)
+
+
+#define DMU_QCLK_DIV_3_VAL              (0x0UL)
+
+
+#define DMU_QCLK_DIV_4_VAL              (0x1UL)
+
+
+#define DMU_QCLK_DIV_5_VAL              (0x2UL)
+
+
+#define DMU_QCLK_DIV_10_VAL             (0x3UL)
+
+#endif /* DMU_RDB_H */

@@ -1,0 +1,3 @@
+/usr/bin/fold
+/bin/busybox.nosuid 50
+/usr/bin/fold.coreutils 100

@@ -1,0 +1,3 @@
+/sbin/nameif
+/bin/busybox.nosuid 50
+/sbin/nameif.net-tools 100

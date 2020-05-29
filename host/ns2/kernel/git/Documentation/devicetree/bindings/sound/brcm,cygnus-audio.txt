@@ -1,0 +1,87 @@
+BROADCOM Cygnus Audio I2S/TDM/SPDIF controller
+
+Required properties:
+	- compatible : "brcm,cygnus-audio"
+	- #address-cells: 32bit valued, 1 cell.
+	- #size-cells:  32bit valued, 0 cell.
+	- reg : Should contain audio registers location and length
+	- reg-names: names of the registers listed in "reg" property
+		Valid names are "aud" and "i2s_in". "aud" contains a
+		set of DMA, I2S_OUT and SPDIF registers. "i2s_in" contains
+		a set of I2S_IN registers.
+	- interrupts: audio DMA interrupt number
+
+Optional properties:
+	- assigned-clocks: only valid choice is audiopll
+	- assigned-clock-rates: clock frequency for audiopll
+If none of the ports need an internal master clock then there no need to
+initialize the pll clock.
+
+
+SSP Subnode properties:
+Required:
+	- reg: The index of ssp port interface to use
+		Valid value are 0, 1, 2, or 3 (for spdif)
+Optional:
+	- clocks: clock used by audio port
+		  one of the audiopll outputs (see brcm,iproc-clocks.txt).
+	- clock-names: Must be "ssp_clk"
+	- brcm,ssp-clk-mux = Needed if a clock is named and used.  This value is
+			used to program the mux within the audio driver which selects
+			the incoming clock. Here is the mapping.
+			audio_pll   output 0 = 0, output 1 = 1, and output 2 = 2
+
+
+Example:
+	cygnus_audio: audio@180ae000 {
+		compatible = "brcm,cygnus-audio";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x180ae000 0xafd>, <0x180aec00 0x1f8>;
+		reg-names = "aud", "i2s_in";
+
+		assigned-clocks = <&audiopll BCM_CYGNUS_AUDIOPLL>;
+		assigned-clock-rates = <1376255989>;
+
+		interrupts = <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
+
+		ssp0: ssp_port@0 {
+			reg = <0>;
+
+			clocks = <&audiopll BCM_CYGNUS_AUDIOPLL_CH0>;
+			clock-names = "ssp_clk";
+			brcm,ssp-clk-mux = <0>;
+
+			status = "okay";
+		};
+
+		ssp1: ssp_port@1 {
+			reg = <1>;
+
+			clocks = <&audiopll BCM_CYGNUS_AUDIOPLL_CH1>;
+			clock-names = "ssp_clk";
+			brcm,ssp-clk-mux = <1>;
+
+			status = "okay";
+		};
+
+		ssp2: ssp_port@2 {
+			reg = <2>;
+
+			clocks = <&audiopll BCM_CYGNUS_AUDIOPLL_CH2>;
+			clock-names = "ssp_clk";
+			brcm,ssp-clk-mux = <2>;
+
+			status = "okay";
+		};
+
+		spdif: spdif_port@3 {
+			reg = <3>;
+
+			clocks = <&audiopll BCM_CYGNUS_AUDIOPLL_CH2>;
+       			clock-names = "ssp_clk";
+			brcm,ssp-clk-mux = <2>;
+
+			status = "disabled";
+		};
+	};

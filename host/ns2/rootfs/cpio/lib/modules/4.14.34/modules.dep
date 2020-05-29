@@ -1,0 +1,95 @@
+kernel/fs/fat/msdos.ko:
+kernel/fs/nfs/flexfilelayout/nfs_layout_flexfiles.ko:
+kernel/fs/nfsd/nfsd.ko:
+kernel/fs/fuse/fuse.ko:
+kernel/fs/fuse/cuse.ko: kernel/fs/fuse/fuse.ko
+kernel/fs/overlayfs/overlay.ko:
+kernel/crypto/echainiv.ko:
+kernel/crypto/tcrypt.ko:
+kernel/drivers/dma/dmatest.ko:
+kernel/drivers/dma/bcm-sba-raid.ko:
+kernel/drivers/block/nbd.ko:
+kernel/drivers/block/null_blk.ko:
+kernel/drivers/misc/eeprom/at25.ko:
+kernel/drivers/nvme/host/nvme-fabrics.ko:
+kernel/drivers/nvme/host/nvme-rdma.ko: kernel/drivers/nvme/host/nvme-fabrics.ko kernel/drivers/infiniband/core/rdma_cm.ko kernel/drivers/infiniband/core/iw_cm.ko kernel/drivers/infiniband/core/ib_cm.ko kernel/drivers/infiniband/core/ib_core.ko kernel/net/ipv6/ipv6.ko
+kernel/drivers/nvme/target/nvmet.ko:
+kernel/drivers/nvme/target/nvme-loop.ko: kernel/drivers/nvme/target/nvmet.ko kernel/drivers/nvme/host/nvme-fabrics.ko
+kernel/drivers/nvme/target/nvmet-rdma.ko: kernel/drivers/nvme/target/nvmet.ko kernel/drivers/infiniband/core/rdma_cm.ko kernel/drivers/infiniband/core/iw_cm.ko kernel/drivers/infiniband/core/ib_cm.ko kernel/drivers/infiniband/core/ib_core.ko kernel/net/ipv6/ipv6.ko
+kernel/drivers/mtd/tests/mtd_oobtest.ko:
+kernel/drivers/mtd/tests/mtd_pagetest.ko:
+kernel/drivers/mtd/tests/mtd_readtest.ko:
+kernel/drivers/mtd/tests/mtd_speedtest.ko:
+kernel/drivers/mtd/tests/mtd_stresstest.ko:
+kernel/drivers/mtd/tests/mtd_subpagetest.ko:
+kernel/drivers/mtd/tests/mtd_torturetest.ko:
+kernel/drivers/mtd/tests/mtd_nandecctest.ko:
+kernel/drivers/mtd/tests/mtd_nandbiterrs.ko:
+kernel/drivers/usb/gadget/function/usb_f_serial.ko:
+kernel/drivers/usb/gadget/function/usb_f_obex.ko:
+kernel/drivers/usb/gadget/function/usb_f_mass_storage.ko:
+kernel/drivers/usb/gadget/legacy/g_mass_storage.ko: kernel/drivers/usb/gadget/function/usb_f_mass_storage.ko
+kernel/drivers/usb/gadget/legacy/g_serial.ko:
+kernel/drivers/crypto/bcm/bcm_crypto_spu.ko:
+kernel/drivers/mailbox/bcm-flexrm-mailbox.ko:
+kernel/drivers/infiniband/core/ib_core.ko: kernel/net/ipv6/ipv6.ko
+kernel/drivers/infiniband/core/ib_cm.ko: kernel/drivers/infiniband/core/ib_core.ko kernel/net/ipv6/ipv6.ko
+kernel/drivers/infiniband/core/iw_cm.ko: kernel/drivers/infiniband/core/ib_core.ko kernel/net/ipv6/ipv6.ko
+kernel/drivers/infiniband/core/rdma_cm.ko: kernel/drivers/infiniband/core/iw_cm.ko kernel/drivers/infiniband/core/ib_cm.ko kernel/drivers/infiniband/core/ib_core.ko kernel/net/ipv6/ipv6.ko
+kernel/drivers/infiniband/core/ib_umad.ko: kernel/drivers/infiniband/core/ib_core.ko kernel/net/ipv6/ipv6.ko
+kernel/drivers/infiniband/core/ib_uverbs.ko: kernel/drivers/infiniband/core/ib_core.ko kernel/net/ipv6/ipv6.ko
+kernel/drivers/infiniband/core/ib_ucm.ko: kernel/drivers/infiniband/core/ib_uverbs.ko kernel/drivers/infiniband/core/ib_cm.ko kernel/drivers/infiniband/core/ib_core.ko kernel/net/ipv6/ipv6.ko
+kernel/drivers/infiniband/core/rdma_ucm.ko: kernel/drivers/infiniband/core/ib_uverbs.ko kernel/drivers/infiniband/core/rdma_cm.ko kernel/drivers/infiniband/core/iw_cm.ko kernel/drivers/infiniband/core/ib_cm.ko kernel/drivers/infiniband/core/ib_core.ko kernel/net/ipv6/ipv6.ko
+kernel/net/802/p8022.ko: kernel/net/llc/llc.ko
+kernel/net/802/psnap.ko: kernel/net/llc/llc.ko
+kernel/net/802/stp.ko: kernel/net/llc/llc.ko
+kernel/net/802/garp.ko: kernel/net/802/stp.ko kernel/net/llc/llc.ko
+kernel/net/802/mrp.ko:
+kernel/net/sched/act_ipt.ko: kernel/net/netfilter/x_tables.ko
+kernel/net/sched/sch_prio.ko:
+kernel/net/sched/sch_mqprio.ko:
+kernel/net/netfilter/nf_conntrack.ko:
+kernel/net/netfilter/nf_log_common.ko:
+kernel/net/netfilter/nf_nat.ko: kernel/net/netfilter/nf_conntrack.ko
+kernel/net/netfilter/x_tables.ko:
+kernel/net/netfilter/xt_tcpudp.ko: kernel/net/netfilter/x_tables.ko
+kernel/net/netfilter/xt_nat.ko: kernel/net/netfilter/nf_nat.ko kernel/net/netfilter/nf_conntrack.ko kernel/net/netfilter/x_tables.ko
+kernel/net/netfilter/xt_CHECKSUM.ko: kernel/net/netfilter/x_tables.ko
+kernel/net/netfilter/xt_LOG.ko: kernel/net/netfilter/x_tables.ko
+kernel/net/netfilter/xt_addrtype.ko: kernel/net/netfilter/x_tables.ko
+kernel/net/netfilter/xt_conntrack.ko: kernel/net/netfilter/nf_conntrack.ko kernel/net/netfilter/x_tables.ko
+kernel/net/ipv4/netfilter/nf_conntrack_ipv4.ko: kernel/net/ipv4/netfilter/nf_defrag_ipv4.ko kernel/net/netfilter/nf_conntrack.ko
+kernel/net/ipv4/netfilter/nf_nat_ipv4.ko: kernel/net/netfilter/nf_nat.ko kernel/net/netfilter/nf_conntrack.ko
+kernel/net/ipv4/netfilter/nf_defrag_ipv4.ko:
+kernel/net/ipv4/netfilter/nf_log_ipv4.ko: kernel/net/netfilter/nf_log_common.ko
+kernel/net/ipv4/netfilter/nf_reject_ipv4.ko:
+kernel/net/ipv4/netfilter/nf_nat_masquerade_ipv4.ko: kernel/net/netfilter/nf_nat.ko kernel/net/netfilter/nf_conntrack.ko
+kernel/net/ipv4/netfilter/ip_tables.ko: kernel/net/netfilter/x_tables.ko
+kernel/net/ipv4/netfilter/iptable_filter.ko: kernel/net/ipv4/netfilter/ip_tables.ko kernel/net/netfilter/x_tables.ko
+kernel/net/ipv4/netfilter/iptable_mangle.ko: kernel/net/ipv4/netfilter/ip_tables.ko kernel/net/netfilter/x_tables.ko
+kernel/net/ipv4/netfilter/iptable_nat.ko: kernel/net/ipv4/netfilter/nf_nat_ipv4.ko kernel/net/ipv4/netfilter/ip_tables.ko kernel/net/netfilter/nf_nat.ko kernel/net/netfilter/nf_conntrack.ko kernel/net/netfilter/x_tables.ko
+kernel/net/ipv4/netfilter/ipt_MASQUERADE.ko: kernel/net/ipv4/netfilter/nf_nat_masquerade_ipv4.ko kernel/net/netfilter/nf_nat.ko kernel/net/netfilter/nf_conntrack.ko kernel/net/netfilter/x_tables.ko
+kernel/net/ipv4/netfilter/ipt_REJECT.ko: kernel/net/ipv4/netfilter/nf_reject_ipv4.ko kernel/net/netfilter/x_tables.ko
+kernel/net/ipv4/tunnel4.ko:
+kernel/net/ipv6/netfilter/ip6_tables.ko: kernel/net/netfilter/x_tables.ko
+kernel/net/ipv6/netfilter/ip6table_filter.ko: kernel/net/ipv6/netfilter/ip6_tables.ko kernel/net/netfilter/x_tables.ko
+kernel/net/ipv6/netfilter/ip6table_mangle.ko: kernel/net/ipv6/netfilter/ip6_tables.ko kernel/net/netfilter/x_tables.ko kernel/net/ipv6/ipv6.ko
+kernel/net/ipv6/netfilter/ip6table_nat.ko: kernel/net/ipv6/netfilter/nf_nat_ipv6.ko kernel/net/ipv6/netfilter/ip6_tables.ko kernel/net/netfilter/nf_nat.ko kernel/net/netfilter/nf_conntrack.ko kernel/net/netfilter/x_tables.ko kernel/net/ipv6/ipv6.ko
+kernel/net/ipv6/netfilter/nf_conntrack_ipv6.ko: kernel/net/ipv6/netfilter/nf_defrag_ipv6.ko kernel/net/netfilter/nf_conntrack.ko kernel/net/ipv6/ipv6.ko
+kernel/net/ipv6/netfilter/nf_nat_ipv6.ko: kernel/net/netfilter/nf_nat.ko kernel/net/netfilter/nf_conntrack.ko kernel/net/ipv6/ipv6.ko
+kernel/net/ipv6/netfilter/nf_nat_masquerade_ipv6.ko: kernel/net/netfilter/nf_nat.ko kernel/net/netfilter/nf_conntrack.ko kernel/net/ipv6/ipv6.ko
+kernel/net/ipv6/netfilter/nf_defrag_ipv6.ko: kernel/net/ipv6/ipv6.ko
+kernel/net/ipv6/netfilter/nf_log_ipv6.ko: kernel/net/netfilter/nf_log_common.ko
+kernel/net/ipv6/netfilter/nf_reject_ipv6.ko: kernel/net/ipv6/ipv6.ko
+kernel/net/ipv6/netfilter/ip6t_MASQUERADE.ko: kernel/net/ipv6/netfilter/nf_nat_masquerade_ipv6.ko kernel/net/netfilter/nf_nat.ko kernel/net/netfilter/nf_conntrack.ko kernel/net/netfilter/x_tables.ko kernel/net/ipv6/ipv6.ko
+kernel/net/ipv6/netfilter/ip6t_REJECT.ko: kernel/net/ipv6/netfilter/nf_reject_ipv6.ko kernel/net/netfilter/x_tables.ko kernel/net/ipv6/ipv6.ko
+kernel/net/ipv6/ipv6.ko:
+kernel/net/ipv6/xfrm6_mode_transport.ko:
+kernel/net/ipv6/xfrm6_mode_tunnel.ko: kernel/net/ipv6/ipv6.ko
+kernel/net/ipv6/xfrm6_mode_beet.ko: kernel/net/ipv6/ipv6.ko
+kernel/net/ipv6/sit.ko: kernel/net/ipv4/tunnel4.ko kernel/net/ipv6/ipv6.ko
+kernel/net/sunrpc/xprtrdma/rpcrdma.ko: kernel/drivers/infiniband/core/rdma_cm.ko kernel/drivers/infiniband/core/iw_cm.ko kernel/drivers/infiniband/core/ib_cm.ko kernel/drivers/infiniband/core/ib_core.ko kernel/net/ipv6/ipv6.ko
+kernel/net/8021q/8021q.ko: kernel/net/802/garp.ko kernel/net/802/stp.ko kernel/net/802/mrp.ko kernel/net/llc/llc.ko
+kernel/net/llc/llc.ko:
+kernel/net/bridge/bridge.ko: kernel/net/802/stp.ko kernel/net/llc/llc.ko kernel/net/ipv6/ipv6.ko
+kernel/net/bridge/br_netfilter.ko: kernel/net/bridge/bridge.ko kernel/net/802/stp.ko kernel/net/llc/llc.ko kernel/net/ipv6/ipv6.ko

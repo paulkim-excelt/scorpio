@@ -1,0 +1,483 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:simpleType name ="CFP_Hex16String">
+    <xs:restriction base = "xs:string">
+        <xs:pattern value = "0x[0-9A-Fa-f]{4}"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name ="CFP_Hex8String">
+    <xs:restriction base = "xs:string">
+        <xs:pattern value = "0x[0-9A-Fa-f]{2}"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name ="CFP_PortBitmapString">
+    <xs:restriction base = "xs:string">
+        <xs:pattern value = "0x[0-9A-Fa-f]+"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "CFP_VLANIDType">
+    <xs:restriction base = "xs:unsignedInt">
+        <xs:minInclusive value = "0"/>
+        <xs:maxInclusive value = "4094"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "CFP_TCType">
+    <xs:restriction base = "xs:unsignedInt">
+        <xs:minInclusive value = "0"/>
+        <xs:maxInclusive value = "7"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "CFP_PktLenCorrType">
+    <xs:restriction base = "xs:string">
+        <xs:enumeration value = "None"/>
+        <xs:enumeration value = "Add-Pre-SFD"/>
+        <xs:enumeration value = "Add-Pre-SFD-IFG"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "CFP_L2FramingType">
+    <xs:restriction base = "xs:string">
+        <xs:enumeration value = "DIXv2"/>
+        <xs:enumeration value = "SNAP-Public"/>
+        <xs:enumeration value = "LLC"/>
+        <xs:enumeration value = "SNAP-Private"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "CFP_AcceptableFrameType">
+    <xs:restriction base = "xs:string">
+        <xs:enumeration value = "Un-Tagged"/>
+        <xs:enumeration value = "Priority-Tagged"/>
+        <xs:enumeration value = "VLAN-Tagged"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "CFP_UDFBaseType">
+    <xs:restriction base = "xs:string">
+        <xs:enumeration value = "SOP"/>
+        <xs:enumeration value = "End-L2-Header"/>
+        <xs:enumeration value = "End-L3-Header"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "CFP_UDFOffsetType">
+    <xs:restriction base = "xs:unsignedInt">
+        <xs:minInclusive value = "0"/>
+        <xs:maxInclusive value = "31"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "CFP_TTLValType">
+    <xs:restriction base = "xs:string">
+        <xs:enumeration value = "0"/>
+        <xs:enumeration value = "1"/>
+        <xs:enumeration value = "Others"/>
+        <xs:enumeration value = "255"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "CFP_ChangeFwdMapType">
+    <xs:restriction base = "xs:string">
+        <xs:enumeration value = "No"/>
+        <xs:enumeration value = "Remove"/>
+        <xs:enumeration value = "Replace"/>
+        <xs:enumeration value = "Add"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "CFP_ColorType">
+    <xs:restriction base = "xs:string">
+        <xs:enumeration value = "Green"/>
+        <xs:enumeration value = "Yellow"/>
+        <xs:enumeration value = "Red"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "CFP_PolicerModeType">
+    <xs:restriction base = "xs:string">
+        <xs:enumeration value = "RFC2698"/>
+        <xs:enumeration value = "RFC4115"/>
+        <xs:enumeration value = "MEF"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name = "CFP_UDFType">
+    <xs:all>
+        <xs:element
+            name = "baseFld"
+            type = "CFP_UDFBaseType"
+        />
+        <xs:element
+            name = "offset"
+            type = "CFP_UDFOffsetType"
+        />
+        <xs:element
+            name = "value"
+            type = "CFP_Hex16String"
+        />
+        <xs:element
+            name = "mask"
+            type = "CFP_Hex16String"
+            minOccurs = "0"
+        />
+    </xs:all>
+</xs:complexType>
+
+<xs:complexType name = "CFP_UDFListType">
+    <xs:sequence>
+        <xs:element
+            name = "udf"
+            type = "CFP_UDFType"
+            minOccurs = "1"
+            maxOccurs = "9"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "CFP_VLANTagType">
+    <xs:sequence>
+        <xs:element
+            name = "acceptableFrame"
+            type = "CFP_AcceptableFrameType"
+            minOccurs = "0"
+            maxOccurs = "3"
+        />
+        <xs:element
+            name = "id"
+            type = "CFP_VLANIDType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "idMask"
+            type = "CFP_VLANIDType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "pcp"
+            type = "CFP_TCType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "pcpMask"
+            type = "CFP_TCType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "dei"
+            type = "xs:boolean"
+            minOccurs = "0"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "CFP_KeyType">
+    <xs:all>
+        <xs:element
+            name  = "l2Framing"
+            type = "CFP_L2FramingType"
+            default = "DIXv2"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "ingressPortBitmap"
+            type = "CFP_PortBitmapString"
+        />
+        <xs:element
+            name = "etherType"
+            type = "CFP_Hex16String"
+            default = "0x0000"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "etherTypeMask"
+            type = "CFP_Hex16String"
+            default = "0xFFFF"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "ttlRange"
+            type = "CFP_TTLValType"
+            default = "0"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "authentication"
+            type = "xs:boolean"
+            default = "false"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "nonFirstFrag"
+            type = "xs:boolean"
+            default = "false"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "fragmentation"
+            type = "xs:boolean"
+            default = "false"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "protocol"
+            type = "CFP_Hex8String"
+            default = "0x00"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "protocolMask"
+            type = "CFP_Hex8String"
+            default = "0xFF"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "tos"
+            type = "CFP_Hex8String"
+            default = "0x00"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "tosMask"
+            type = "CFP_Hex8String"
+            default = "0x00"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "cTag"
+            type = "CFP_VLANTagType"
+            minOccurs = "0"
+        >
+            <xs:unique name="uniqueCtagStatus">
+                <xs:selector xpath="acceptableFrame"/>
+                <xs:field xpath="."/>
+            </xs:unique>
+        </xs:element>
+        <xs:element
+            name = "sTag"
+            type = "CFP_VLANTagType"
+            minOccurs = "0"
+        >
+            <xs:unique name="uniqueStagStatus">
+                <xs:selector xpath="acceptableFrame"/>
+                <xs:field xpath="."/>
+            </xs:unique>
+        </xs:element>
+        <xs:element
+            name = "udfList"
+            type = "CFP_UDFListType"
+            minOccurs = "0"
+        />
+    </xs:all>
+</xs:complexType>
+
+<xs:complexType name = "CFP_DstMapFlagsType">
+    <xs:all>
+        <xs:element
+            name  = "portMap"
+            type = "CFP_PortBitmapString"
+        />
+        <xs:element
+            name = "change"
+            type = "CFP_ChangeFwdMapType"
+        />
+    </xs:all>
+</xs:complexType>
+
+<xs:complexType name = "CFP_ActionType">
+    <xs:all>
+        <xs:element
+            name  = "changeInBoundDestination"
+            type = "CFP_DstMapFlagsType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name  = "changeOutOfBoundDestination"
+            type = "CFP_DstMapFlagsType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "changeInBoundTOS"
+            type = "CFP_Hex8String"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "changeOutOfBoundTOS"
+            type = "CFP_Hex8String"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "changeTC"
+            type = "CFP_TCType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "bypassSTP"
+            type = "xs:boolean"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "bypassEAP"
+            type = "xs:boolean"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "bypassVLAN"
+            type = "xs:boolean"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "loopbackEn"
+            type = "xs:boolean"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "redDfltProfile"
+            type = "xs:boolean"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "reasonCode"
+            type = "CFP_Hex8String"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "changeColor"
+            type = "CFP_ColorType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "enablePolicer"
+            type = "CFP_MeterType"
+            minOccurs = "0"
+        />
+    </xs:all>
+</xs:complexType>
+
+<xs:simpleType name = "CFP_BucketSizeType">
+    <xs:restriction base = "xs:unsignedInt">
+        <xs:minInclusive value = "0"/>
+        <xs:maxInclusive value = "1048575"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "CFP_RateType">
+    <xs:restriction base = "xs:unsignedInt">
+        <xs:minInclusive value = "4"/>
+        <xs:maxInclusive value = "2097152"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name = "CFP_BucketType">
+    <xs:all>
+        <xs:element
+            name = "bktSize"
+            type = "CFP_BucketSizeType"
+        />
+        <xs:element
+            name = "burstSize"
+            type = "CFP_BucketSizeType"
+        />
+        <xs:element
+            name = "rate"
+            type = "CFP_RateType"
+        />
+    </xs:all>
+</xs:complexType>
+
+<xs:complexType name = "CFP_MeterType">
+    <xs:all>
+        <xs:element
+            name  = "policerMode"
+            type = "CFP_PolicerModeType"
+            minOccurs = "1"
+        />
+        <xs:element
+            name  = "couplingFlag"
+            type = "xs:boolean"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "colorMode"
+            type = "xs:boolean"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "policerAction"
+            type = "xs:boolean"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "cir"
+            type = "CFP_BucketType"
+            minOccurs = "1"
+        />
+        <xs:element
+            name = "eir"
+            type = "CFP_BucketType"
+            minOccurs = "0"
+        />
+    </xs:all>
+</xs:complexType>
+
+<xs:complexType name = "CFP_RuleType">
+    <xs:sequence>
+        <xs:element
+            name  = "key"
+            type = "CFP_KeyType"
+        />
+        <xs:element
+            name  = "action"
+            type = "CFP_ActionType"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "CFP_RuleListType">
+    <xs:sequence>
+        <xs:element
+            name = "rule"
+            type = "CFP_RuleType"
+            minOccurs = "1"
+            maxOccurs = "256"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "CFP_CfgType">
+    <xs:all>
+        <xs:element
+            name = "pktLenCorrection"
+            type = "CFP_PktLenCorrType"
+        />
+        <xs:element
+            name = "portEnableMask"
+            type = "CFP_PortBitmapString"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "nonIPRules"
+            type = "CFP_RuleListType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "ipv4Rules"
+            type = "CFP_RuleListType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "ipv6Rules"
+            type = "CFP_RuleListType"
+            minOccurs = "0"
+        />
+    </xs:all>
+</xs:complexType>
+<xs:element
+    name = "CFP_Cfg"
+    type = "CFP_CfgType"
+    />
+</xs:schema>

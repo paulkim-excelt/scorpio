@@ -1,0 +1,15 @@
+if TARGET_BROADCOM_PEGASUS
+
+config SYS_BOARD
+	default "bcm_pegasus"
+
+config SYS_VENDOR
+	default "broadcom"
+
+config SYS_SOC
+    default "bcm_pegasus"
+
+config SYS_CONFIG_NAME
+	default "bcm_pegasus"
+
+endif

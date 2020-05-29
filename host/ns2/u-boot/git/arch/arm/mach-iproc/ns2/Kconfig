@@ -1,0 +1,20 @@
+if NS2
+
+choice
+	prompt "NORTHSTAR2 board select"
+	optional
+
+config TARGET_NS2_SVK
+	bool "Broadcom Northstar2 SVK board"
+
+config TARGET_NS2_XMC
+	bool "Broadcom Northstar2 XMC board"
+
+endchoice
+
+config SYS_SOC
+	default "ns2"
+
+source "board/broadcom/bcmns2_svk/Kconfig"
+
+endif

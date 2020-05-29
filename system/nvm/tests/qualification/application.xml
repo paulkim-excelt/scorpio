@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<brcm_cfg>
+    <comp name="ptm_qt">
+        <opt>ENABLE_PTM_TEST</opt>
+
+        <event>PTMTestEvent</event>
+
+        <task name="PTMQT_Task">
+            <priority>4</priority>
+            <autostart>false</autostart>
+            <stack>2048</stack>
+            <event>PTMTestEvent</event>
+        </task>
+	<cfg pid="0x5" imgid="0xC000" maxsz="0x1000" file="system/nvm/tests/qualification/ptm_test_data.bin"/>
+    </comp>
+</brcm_cfg>

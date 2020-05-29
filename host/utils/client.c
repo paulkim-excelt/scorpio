@@ -1,0 +1,104 @@
+/*****************************************************************************
+ Copyright 2017 Broadcom Limited.  All rights reserved.
+
+ This program is the proprietary software of Broadcom Limited and/or its
+ licensors, and may only be used, duplicated, modified or distributed pursuant
+ to the terms and conditions of a separate, written license agreement executed
+ between you and Broadcom (an "Authorized License").
+
+ Except as set forth in an Authorized License, Broadcom grants no license
+ (express or implied), right to use, or waiver of any kind with respect to the
+ Software, and Broadcom expressly reserves all rights in and to the Software
+ and all intellectual property rights therein.  IF YOU HAVE NO AUTHORIZED
+ LICENSE, THEN YOU HAVE NO RIGHT TO USE THIS SOFTWARE IN ANY WAY, AND SHOULD
+ IMMEDIATELY NOTIFY BROADCOM AND DISCONTINUE ALL USE OF THE SOFTWARE.
+
+  Except as expressly set forth in the Authorized License,
+ 1. This program, including its structure, sequence and organization,
+    constitutes the valuable trade secrets of Broadcom, and you shall use all
+    reasonable efforts to protect the confidentiality thereof, and to use this
+    information only in connection with your use of Broadcom integrated
+    circuit products.
+
+ 2. TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED "AS IS"
+    AND WITH ALL FAULTS AND BROADCOM MAKES NO PROMISES, REPRESENTATIONS OR
+    WARRANTIES, EITHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, WITH RESPECT
+    TO THE SOFTWARE.  BROADCOM SPECIFICALLY DISCLAIMS ANY AND ALL IMPLIED
+    WARRANTIES OF TITLE, MERCHANTABILITY, NONINFRINGEMENT, FITNESS FOR A
+    PARTICULAR PURPOSE, LACK OF VIRUSES, ACCURACY OR COMPLETENESS,
+    QUIET ENJOYMENT, QUIET POSSESSION OR CORRESPONDENCE TO DESCRIPTION.
+    YOU ASSUME THE ENTIRE RISK ARISING OUT OF USE OR PERFORMANCE OF THE
+    SOFTWARE.
+
+ 3. TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL BROADCOM OR ITS
+    LICENSORS BE LIABLE FOR (i) CONSEQUENTIAL, INCIDENTAL, SPECIAL, INDIRECT,
+    OR EXEMPLARY DAMAGES WHATSOEVER ARISING OUT OF OR IN ANY WAY RELATING TO
+    YOUR USE OF OR INABILITY TO USE THE SOFTWARE EVEN IF BROADCOM HAS BEEN
+    ADVISED OF THE POSSIBILITY OF SUCH DAMAGES; OR (ii) ANY AMOUNT IN EXCESS
+    OF THE AMOUNT ACTUALLY PAID FOR THE SOFTWARE ITSELF OR U.S. $1, WHICHEVER
+    IS GREATER. THESE LIMITATIONS SHALL APPLY NOTWITHSTANDING ANY FAILURE OF
+    ESSENTIAL PURPOSE OF ANY LIMITED REMEDY.
+******************************************************************************/
+
+#include <stdio.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <mqueue.h>
+#include <stdlib.h>
+#include <string.h>
+#include <server.h>
+#include <hlog.h>
+
+int main(int argc, char *argv[])
+{
+    mqd_t mqd = -1;
+    int i;
+    int retVal = -1;
+    int strsize = 0;
+    char *cmdstring;
+
+    if (argc < 2) {
+        goto done;
+    }
+
+    for (i=1; i<argc; i++) {
+        strsize += strlen(argv[i]);
+        strsize++; /* account for space and null termination */
+    }
+    if (strsize > MGMT_CMD_STR_MAX_LEN) {
+        HOST_Log("Command size:%d > maximum allowed:%d\n", strsize, MGMT_CMD_STR_MAX_LEN);
+        goto done;
+    }
+
+    cmdstring = malloc(strsize);
+    cmdstring[0] = '\0';
+    for (i=1; i<argc; i++) {
+        strcat(cmdstring, argv[i]);
+        if (i < (argc - 1)) {
+            strcat(cmdstring, " ");
+        }
+    }
+//    HOST_Log("client: \"%s\"\n", cmdstring);
+
+    mqd = mq_open(MGMT_MSGQ_NAME, O_WRONLY);
+    if (mqd == -1) {
+        perror("mq_open");
+        goto done;
+    }
+
+    retVal = mq_send(mqd, cmdstring, strsize, 1);
+    if (retVal == -1) {
+        perror("mq_send");
+        goto done;
+    }
+
+done:
+    if (mqd != -1) {
+        retVal = mq_close(mqd);
+        if (retVal == -1) {
+            perror("mq_close");
+        }
+    }
+
+    return retVal;
+}

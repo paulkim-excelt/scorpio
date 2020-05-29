@@ -1,0 +1,11 @@
+if TARGET_NS2_SVK
+
+config SYS_BOARD
+	default "bcmns2_svk"
+
+config SYS_VENDOR
+	default "broadcom"
+
+config SYS_CONFIG_NAME
+	default "bcm_northstar2"
+endif

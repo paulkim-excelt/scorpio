@@ -1,0 +1,483 @@
+;*****************************************************************************
+; Copyright 2019 Broadcom Limited.  All rights reserved.
+;
+; This program is the proprietary software of Broadcom Limited and/or its
+; licensors, and may only be used, duplicated, modified or distributed pursuant
+; to the terms and conditions of a separate, written license agreement executed
+; between you and Broadcom (an "Authorized License").
+;
+; Except as set forth in an Authorized License, Broadcom grants no license
+; (express or implied), right to use, or waiver of any kind with respect to the
+; Software, and Broadcom expressly reserves all rights in and to the Software
+; and all intellectual property rights therein.  IF YOU HAVE NO AUTHORIZED
+; LICENSE, THEN YOU HAVE NO RIGHT TO USE THIS SOFTWARE IN ANY WAY, AND SHOULD
+; IMMEDIATELY NOTIFY BROADCOM AND DISCONTINUE ALL USE OF THE SOFTWARE.
+;
+;  Except as expressly set forth in the Authorized License,
+; 1. This program, including its structure, sequence and organization,
+;    constitutes the valuable trade secrets of Broadcom, and you shall use all
+;    reasonable efforts to protect the confidentiality thereof, and to use this
+;    information only in connection with your use of Broadcom integrated
+;    circuit products.
+;
+; 2. TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED "AS IS"
+;    AND WITH ALL FAULTS AND BROADCOM MAKES NO PROMISES, REPRESENTATIONS OR
+;    WARRANTIES, EITHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, WITH RESPECT
+;    TO THE SOFTWARE.  BROADCOM SPECIFICALLY DISCLAIMS ANY AND ALL IMPLIED
+;    WARRANTIES OF TITLE, MERCHANTABILITY, NONINFRINGEMENT, FITNESS FOR A
+;    PARTICULAR PURPOSE, LACK OF VIRUSES, ACCURACY OR COMPLETENESS,
+;    QUIET ENJOYMENT, QUIET POSSESSION OR CORRESPONDENCE TO DESCRIPTION.
+;    YOU ASSUME THE ENTIRE RISK ARISING OUT OF USE OR PERFORMANCE OF THE
+;    SOFTWARE.
+;
+; 3. TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL BROADCOM OR ITS
+;    LICENSORS BE LIABLE FOR (i) CONSEQUENTIAL, INCIDENTAL, SPECIAL, INDIRECT,
+;    OR EXEMPLARY DAMAGES WHATSOEVER ARISING OUT OF OR IN ANY WAY RELATING TO
+;    YOUR USE OF OR INABILITY TO USE THE SOFTWARE EVEN IF BROADCOM HAS BEEN
+;    ADVISED OF THE POSSIBILITY OF SUCH DAMAGES; OR (ii) ANY AMOUNT IN EXCESS
+;    OF THE AMOUNT ACTUALLY PAID FOR THE SOFTWARE ITSELF OR U.S. $1, WHICHEVER
+;    IS GREATER. THESE LIMITATIONS SHALL APPLY NOTWITHSTANDING ANY FAILURE OF
+;    ESSENTIAL PURPOSE OF ANY LIMITED REMEDY.
+;******************************************************************************/
+
+global &bl_elf_name
+&bl_elf_name="BOOTLOADER_ELF_NAME"
+
+global &app_img_name
+&app_img_name="APPLICATION_IMG_NAME"
+
+global &imgSz
+&imgSz=0
+
+global &BOOT_INFO_REG
+&BOOT_INFO_REG=0x4A800320
+
+global &BOOT_INFO_IPC_DWNLD_MASK
+&BOOT_INFO_IPC_DWNLD_MASK=0xD
+
+global &IPC_START_ADDR
+global &IPC_RX_BUFF_START_ADDR
+global &IPC_BUF_INFO
+global &IPC_BUF_INFO2
+
+;=========================================
+;   BL IPC driver interface defines
+;=========================================
+global &IPC_BUFF_INFO_REG
+&IPC_BUFF_INFO_REG=0x4A80032E
+
+global &IPC_BUFF_INFO_BASE_ALIGN_SHIFT
+&IPC_BUFF_INFO_BASE_ALIGN_SHIFT=0xB
+
+global &IPC_BUFF_INFO_BASE_SHIFT
+&IPC_BUFF_INFO_BASE_SHIFT=0x8
+
+global &IPC_BUFF_INFO_BASE_MASK
+&IPC_BUFF_INFO_BASE_MASK=0xFF00
+
+global &IPC_BUFF_INFO_SZ_SHIFT
+&IPC_BUFF_INFO_SZ_SHIFT=0x4
+
+global &IPC_BUFF_INFO_SZ_MASK
+&IPC_BUFF_INFO_SZ_MASK=0x00F0
+
+global &IPC_BUFF_INFO_CNT_SHIFT
+&IPC_BUFF_INFO_CNT_SHIFT=0x2
+
+global &IPC_BUFF_INFO_CNT_MASK
+&IPC_BUFF_INFO_CNT_MASK=0x000C
+
+global &IPC_BUFF_INFO_PAR_SHIFT
+&IPC_BUFF_INFO_PAR_MASK=0x0
+
+global &IPC_BUFF_INFO_PAR_MASK
+&IPC_BUFF_INFO_PAR_MASK=0x0001
+
+global &IPC_BUFF_INFO2_REG
+&IPC_BUFF_INFO2_REG=0x4A800334
+
+global &IPC_BUFF_INFO2_BASE_ALIGN_SHIFT
+&IPC_BUFF_INFO2_BASE_ALIGN_SHIFT=0x13 //19UL
+
+global &IPC_BUFF_INFO2_BASE_SHIFT
+&IPC_BUFF_INFO2_BASE_SHIFT=0x1
+
+global &IPC_BUFF_INFO2_BASE_MASK
+&IPC_BUFF_INFO2_BASE_MASK=0x3FFE
+
+global &IPC_BUFF_INFO2_PAR_SHIFT
+&IPC_BUFF_INFO2_PAR_SHIFT=0x0
+
+global &IPC_BUFF_INFO2_PAR_MASK
+&IPC_BUFF_INFO2_PAR_MASK=0x1
+
+global &TARGET_STAT_REG
+&TARGET_STAT_REG=0x4A800330
+
+global &BL_DWNLD_TARGET_SPARE_REG
+&BL_DWNLD_TARGET_SPARE_REG=0x4A800322
+
+global &BL_DWNLD_HOST_SPARE_REG
+&BL_DWNLD_HOST_SPARE_REG=0x4A800324
+
+global &BL_IPC_DWNLD_BL_READY_MASK
+&BL_IPC_DWNLD_BL_READY_MASK=0x1
+
+global &BL_IPC_DWNLD_STATUS_MASK
+&BL_IPC_DWNLD_STATUS_MASK=0x0300
+
+global &BL_IPC_DWNLD_STATUS_SHIFT
+&BL_IPC_DWNLD_STATUS_SHIFT=8
+
+global &BL_IPC_DWNLD_STATUS_BUSY
+&BL_IPC_DWNLD_STATUS_BUSY=0x2
+
+global &TARGET_STAT_RD_MASK
+&TARGET_STAT_RD_MASK=0xF
+
+global &TARGET_STAT_RD_SHIFT
+&TARGET_STAT_RD_SHIFT=0x0
+
+global &TARGET_STAT_WR_MASK
+&TARGET_STAT_WR_MASK=0xF0
+
+global &TARGET_STAT_WR_SHIFT
+&TARGET_STAT_WR_SHIFT=0x4
+
+global &HOST_STAT_REG
+&HOST_STAT_REG=0x4A800332
+
+global &HOST_STAT_READY_MASK
+&HOST_STAT_READY_MASK=0x200
+
+global &HOST_STAT_WR_MASK
+&HOST_STAT_WR_MASK=0xF0
+
+global &HOST_STAT_WR_SHIFT
+&HOST_STAT_WR_SHIFT=0x4
+
+global &HOST_STAT_RD_MASK
+&HOST_STAT_RD_MASK=0xF
+
+global &HOST_STAT_RD_SHIFT
+&HOST_STAT_RD_SHIFT=0x0
+
+global &BL_IPC_DWNLD_FLASHING_PERCENT_MASK
+&BL_IPC_DWNLD_FLASHING_PERCENT_MASK=0x00FE
+
+global &BL_IPC_DWNLD_FLASHING_PERCENT_SHIFT
+&BL_IPC_DWNLD_FLASHING_PERCENT_SHIFT=1
+
+global &BL_IPC_DWNLD_STATUS_SHIFT
+&BL_IPC_DWNLD_STATUS_SHIFT=8
+
+global &HOST_ERASE_CMD_MASK
+&HOST_ERASE_CMD_MASK=0x4000
+
+global &BL_IPC_DWNLD_IPC_CMD_MASK
+&BL_IPC_DWNLD_IPC_CMD_MASK=0xFF00
+
+global &BL_IPC_DWNLD_IPC_CMD_SHIFT
+&BL_IPC_DWNLD_IPC_CMD_SHIFT=0
+
+global &BL_IPC_DWNLD_CMD_GROUP_BL
+&BL_IPC_DWNLD_CMD_GROUP_BL=0x40
+
+global &BL_IPC_DWNLD_CMD_GROUP_COMMON
+&BL_IPC_DWNLD_CMD_GROUP_COMMON=0x0
+
+global &BL_IPC_DWNLD_CMD_GROUP_SHIFT
+&BL_IPC_DWNLD_CMD_GROUP_SHIFT=0x18
+
+global &IPC_HDR_MAGIC_OFFSET
+&IPC_HDR_MAGIC_OFFSET=0x0
+
+global &IPC_HDR_CHKSUM_OFFSET
+&IPC_HDR_CHKSUM_OFFSET=0x4
+
+global &IPC_HDR_CMD_OFFSET
+&IPC_HDR_CMD_OFFSET=0x8
+
+global &IPC_HDR_LEN_OFFSET
+&IPC_HDR_LEN_OFFSET=0xC //12
+
+global &IPC_MSG_DATA_OFFSET
+&IPC_MSG_DATA_OFFSET=0x10 //16
+
+global &IPC_HDR_SZ
+&IPC_HDR_SZ=&IPC_MSG_DATA_OFFSET
+
+global &IPC_CMD_MAGIC
+&IPC_CMD_MAGIC=0xa5a5a5a5
+
+global &MSG_BUF_SIZE
+&MSG_BUF_SIZE=0x180 ;152-128
+
+
+;=========================================
+;   BL IPC commands
+;=========================================
+global &BL_IPC_DWNLD_CMD_FLASH
+&BL_IPC_DWNLD_CMD_FLASH=1
+
+global &BL_IPC_DWNLD_CMD_ERASE
+&BL_IPC_DWNLD_CMD_ERASE=3
+
+global &BL_IPC_DWNLD_CMD_DWNLD_IMG_HDR
+&BL_IPC_DWNLD_CMD_DWNLD_IMG_HDR=2
+
+global &BL_IPC_DWNLD_CMD_DWNLD_IMG
+&BL_IPC_DWNLD_CMD_DWNLD_IMG=3
+
+global &BL_IPC_DWNLD_CMD_OTP_RD
+&BL_IPC_DWNLD_CMD_OTP_RD=8
+
+global &BL_IPC_DWNLD_CMD_OTP_WR_SEC_KEY
+&BL_IPC_DWNLD_CMD_OTP_WR_SEC_KEY=9
+
+global &BL_IPC_DWNLD_CMD_OTP_ENABLE_SEC
+&BL_IPC_DWNLD_CMD_OTP_ENABLE_SEC=10
+
+;=========================================
+;   variables
+;=========================================
+var.newglobal short \wrPtr
+var.set \wrPtr=0
+
+var.newglobal short \rdPtr
+var.set \rdPtr=0
+
+var.newglobal short \i
+var.set \i=1
+
+global &timeout
+
+global &retVal
+&retVal=0
+
+global &IPC_MSG_SIZE
+global &IPC_MSG_CNT
+global &IPC_MSG_CNT_MASK
+
+;===========================================
+;   Reset and halt
+;===========================================
+Reset
+
+sys.cpu CORTEXM7
+
+SYS.JTAGCLOCK 1000kHz
+sys.option ENRESET off
+SYStem.Option ResBreak ON
+
+SYStem.MultiCore MEMORYACCESSPORT 1
+SYStem.MultiCore DEBUGACCESSPORT 2
+
+; Daisy chain configuration for master
+;SYStem.CONFIG DAPIRPOST  0
+;SYStem.CONFIG DAPIRPRE   4
+;SYStem.CONFIG DAPDRPOST  0
+;SYStem.CONFIG DAPDRPRE   1
+
+sys.mode.up
+
+;===========================================
+;   Load BL and enter into download mode
+;===========================================
+;load BL code
+d.load.elf &bl_elf_name /gnu
+
+;clear target and host status registers
+D.S SD:&TARGET_STAT_REG %LE %WORD 0x0
+D.S SD:&HOST_STAT_REG %LE %WORD 0x0
+
+; put BL in download mode and wait for ready
+GOSUB WaitBLReady
+if &retVal!=0
+(
+    goto END
+)
+
+;===========================================
+;   Functions
+;===========================================
+gosub EraseFlash
+if &retVal!=0
+(
+    goto END
+)
+
+goto END
+
+IPCCalCheckSum:
+(
+    entry &addr &len
+    local &checksum
+    &checksum=0
+
+    while (&len!=0)
+    (
+        &checksum=&checksum+data.long(SD:&addr)
+        &checksum=&checksum&0xffffffff
+        &addr=&addr+4
+        &len=&len-4
+    )
+    return (~(&checksum)&0xFFFFFFFF)+1
+)
+
+IPCWaitReply:
+(
+    local &targetWrPtr
+    local &percent
+    &percent=0
+    &timeout=6000
+
+    break
+    &targetWrPtr=((data.word(SD:&TARGET_STAT_REG)&(&TARGET_STAT_WR_MASK))>>&TARGET_STAT_WR_SHIFT)
+    while (&targetWrPtr==var.value(\rdPtr))
+    (
+        go
+        wait 500ms
+        break
+        &targetWrPtr=((data.word(SD:&TARGET_STAT_REG)&(&TARGET_STAT_WR_MASK))>>&TARGET_STAT_WR_SHIFT)
+        &timeout=&timeout-1
+        &percent=(data.word(SD:&BL_DWNLD_TARGET_SPARE_REG)&(&BL_IPC_DWNLD_FLASHING_PERCENT_MASK))>>&BL_IPC_DWNLD_FLASHING_PERCENT_SHIFT
+        PRINT "Progress%: &percent"
+        if &timeout==0
+        (
+            &retVal=1
+            goto IPCWaitReplyEnd
+        )
+    )
+    var.set \rdPtr++
+
+    D.S SD:&HOST_STAT_REG %LE %Word (data.word(SD:&HOST_STAT_REG)&(~(&HOST_STAT_RD_MASK)))
+    D.S SD:&HOST_STAT_REG %LE %Word (data.word(SD:&HOST_STAT_REG)|(((var.value(\rdPtr)&(&IPC_MSG_CNT_MASK))<<&HOST_STAT_RD_SHIFT)))
+
+IPCWaitReplyEnd:
+    return
+)
+
+WaitBLReady:
+(
+    ; put BL in IPC download mode
+    &timeout=6000
+    D.S SD:&BOOT_INFO_REG %LE %Word &BOOT_INFO_IPC_DWNLD_MASK
+    go
+    wait 1s
+    break
+
+    ; wait till the BL ready bit is set
+    while ((data.word(SD:&BL_DWNLD_TARGET_SPARE_REG)&(&BL_IPC_DWNLD_BL_READY_MASK))!=&BL_IPC_DWNLD_BL_READY_MASK)
+    (
+        go
+        wait 1ms
+        break
+        timeout--
+        IF &timeout==0
+        (
+            DIALOG.OK "WaitBLReady: Timeout!!"
+            &retVal=1
+            goto WaitBLReadyEnd
+        )
+    )
+    if &retVal==0
+    (
+        ;retrieve IPC info
+        &IPC_BUF_INFO=data.word(SD:&IPC_BUFF_INFO_REG)
+
+        ;retrieve IPC info2
+        &IPC_BUF_INFO2=data.word(SD:&IPC_BUFF_INFO2_REG)
+
+        &IPC_MSG_SIZE=(0x1<<(((&IPC_BUF_INFO)&(&IPC_BUFF_INFO_SZ_MASK))>>(&IPC_BUFF_INFO_SZ_SHIFT)))
+        &IPC_MSG_CNT=(0x1<<(((&IPC_BUF_INFO)&(&IPC_BUFF_INFO_CNT_MASK))>>(&IPC_BUFF_INFO_CNT_SHIFT)))
+        &IPC_MSG_CNT_MASK=0xF
+
+        &IPC_START_ADDR=((((&IPC_BUF_INFO)&(&IPC_BUFF_INFO_BASE_MASK))>>(&IPC_BUFF_INFO_BASE_SHIFT))<<(&IPC_BUFF_INFO_BASE_ALIGN_SHIFT))
+        &IPC_START_ADDR=&IPC_START_ADDR+((((&IPC_BUF_INFO2)&(&IPC_BUFF_INFO2_BASE_MASK))>>(&IPC_BUFF_INFO2_BASE_SHIFT))<<(&IPC_BUFF_INFO2_BASE_ALIGN_SHIFT))
+
+        &IPC_RX_BUFF_START_ADDR=&IPC_START_ADDR
+        &IPC_TX_BUFF_START_ADDR=((&IPC_RX_BUFF_START_ADDR)+((&IPC_MSG_CNT)*(&IPC_MSG_SIZE)))
+    )
+WaitBLReadyEnd:
+    return
+)
+
+WaitBLBusy:
+(
+    local &percent
+    &percent=0
+    break
+    while (&percent<0x64)
+    (
+        break
+        &percent=(data.word(SD:&BL_DWNLD_TARGET_SPARE_REG)&(&BL_IPC_DWNLD_FLASHING_PERCENT_MASK))>>&BL_IPC_DWNLD_FLASHING_PERCENT_SHIFT
+        go
+        wait 1s
+        PRINT "Progress%: &percent"
+    )
+WaitBLBusyEnd:
+    return
+)
+
+EraseFlash:
+(
+    local &FLASH_ID_INTERNAL
+    &FLASH_ID_INTERNAL=0
+
+    local &SYS_CMDID_FLASH_ERASE
+    &SYS_CMDID_FLASH_ERASE=0x40
+
+    local &BCM_GROUPID_SYS
+    &BCM_GROUPID_SYS=0x1
+
+    local &yesNo
+    local &eraseCmd
+    local &eraseCmdLen
+    local &ipcSz
+
+    DIALOG.YESNO "Erase flash?"
+    entry &yesNo
+    if (!&yesNo)
+    (
+        goto EraseFlashEnd
+    )
+    &eraseCmdLen=0x18C
+    &eraseCmd=(&BCM_GROUPID_SYS<<0x18)|(&SYS_CMDID_FLASH_ERASE)
+    D.S SD:(&IPC_RX_BUFF_START_ADDR+&IPC_HDR_MAGIC_OFFSET) %Long &IPC_CMD_MAGIC
+    D.S SD:(&IPC_RX_BUFF_START_ADDR+&IPC_HDR_CHKSUM_OFFSET) %Long 0x0
+    D.S SD:(&IPC_RX_BUFF_START_ADDR+&IPC_HDR_CMD_OFFSET) %Long &eraseCmd ;command
+    D.S SD:(&IPC_RX_BUFF_START_ADDR+&IPC_HDR_LEN_OFFSET) %Long &eraseCmdLen ;length
+    D.S SD:(&IPC_RX_BUFF_START_ADDR+&IPC_MSG_DATA_OFFSET) %Long &FLASH_ID_INTERNAL ;flash id
+    D.S SD:(&IPC_RX_BUFF_START_ADDR+&IPC_MSG_DATA_OFFSET+4) %Long 0x0 ;flash address
+    D.S SD:(&IPC_RX_BUFF_START_ADDR+&IPC_MSG_DATA_OFFSET+8) %Long 0x0 ;num images
+    D.s SD:(&IPC_RX_BUFF_START_ADDR+&IPC_MSG_DATA_OFFSET+0xC)++0x180 %byte 0x0
+    &ipcSz=&IPC_HDR_SZ+&eraseCmdLen
+
+    gosub IPCCalCheckSum &IPC_RX_BUFF_START_ADDR &ipcSz
+    entry &checksum
+    D.S SD:(&IPC_RX_BUFF_START_ADDR+&IPC_HDR_CHKSUM_OFFSET) %Long &checksum
+
+    ;increment the write pointer and wait for response
+    &wrPtr=(data.word(SD:&HOST_STAT_REG)&(&HOST_STAT_WR_MASK))>>&HOST_STAT_WR_SHIFT;
+    &wrPtr=&wrPtr+1
+    D.S SD:&HOST_STAT_REG %LE %Word (data.word(SD:&HOST_STAT_REG)|((&wrPtr&(&IPC_MSG_CNT_MASK))<<&HOST_STAT_WR_SHIFT))
+    go
+    gosub IPCWaitReply
+
+    ; Wait for erase to complete
+    gosub WaitBLBusy
+
+EraseFlashEnd:
+    return
+)
+
+END:
+    if &retVal==0
+    (
+        DIALOG.OK "Flashing Success!!"
+    )
+    else
+    (
+        DIALOG.OK "Flashing Failed!!"
+    )

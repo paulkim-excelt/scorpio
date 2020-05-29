@@ -1,0 +1,171 @@
+/*****************************************************************************
+ Copyright 2019 Broadcom Limited.  All rights reserved.
+
+ This program is the proprietary software of Broadcom Limited and/or its
+ licensors, and may only be used, duplicated, modified or distributed pursuant
+ to the terms and conditions of a separate, written license agreement executed
+ between you and Broadcom (an "Authorized License").
+
+ Except as set forth in an Authorized License, Broadcom grants no license
+ (express or implied), right to use, or waiver of any kind with respect to the
+ Software, and Broadcom expressly reserves all rights in and to the Software
+ and all intellectual property rights therein.  IF YOU HAVE NO AUTHORIZED
+ LICENSE, THEN YOU HAVE NO RIGHT TO USE THIS SOFTWARE IN ANY WAY, AND SHOULD
+ IMMEDIATELY NOTIFY BROADCOM AND DISCONTINUE ALL USE OF THE SOFTWARE.
+
+  Except as expressly set forth in the Authorized License,
+ 1. This program, including its structure, sequence and organization,
+    constitutes the valuable trade secrets of Broadcom, and you shall use all
+    reasonable efforts to protect the confidentiality thereof, and to use this
+    information only in connection with your use of Broadcom integrated
+    circuit products.
+
+ 2. TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED "AS IS"
+    AND WITH ALL FAULTS AND BROADCOM MAKES NO PROMISES, REPRESENTATIONS OR
+    WARRANTIES, EITHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, WITH RESPECT
+    TO THE SOFTWARE.  BROADCOM SPECIFICALLY DISCLAIMS ANY AND ALL IMPLIED
+    WARRANTIES OF TITLE, MERCHANTABILITY, NONINFRINGEMENT, FITNESS FOR A
+    PARTICULAR PURPOSE, LACK OF VIRUSES, ACCURACY OR COMPLETENESS,
+    QUIET ENJOYMENT, QUIET POSSESSION OR CORRESPONDENCE TO DESCRIPTION.
+    YOU ASSUME THE ENTIRE RISK ARISING OUT OF USE OR PERFORMANCE OF THE
+    SOFTWARE.
+
+ 3. TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL BROADCOM OR ITS
+    LICENSORS BE LIABLE FOR (i) CONSEQUENTIAL, INCIDENTAL, SPECIAL, INDIRECT,
+    OR EXEMPLARY DAMAGES WHATSOEVER ARISING OUT OF OR IN ANY WAY RELATING TO
+    YOUR USE OF OR INABILITY TO USE THE SOFTWARE EVEN IF BROADCOM HAS BEEN
+    ADVISED OF THE POSSIBILITY OF SUCH DAMAGES; OR (ii) ANY AMOUNT IN EXCESS
+    OF THE AMOUNT ACTUALLY PAID FOR THE SOFTWARE ITSELF OR U.S. $1, WHICHEVER
+    IS GREATER. THESE LIMITATIONS SHALL APPLY NOTWITHSTANDING ANY FAILURE OF
+    ESSENTIAL PURPOSE OF ANY LIMITED REMEDY.
+******************************************************************************/
+/**
+    @file cpu_indirect_rdb.h
+    @brief RDB File for CPU_INDIRECT
+
+    @version 2019Jan21_rdb
+*/
+
+#ifndef CPU_INDIRECT_RDB_H
+#define CPU_INDIRECT_RDB_H
+
+#include <stdint.h>
+
+#include <compiler.h>
+
+
+typedef uint16_t CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_TYPE;
+#define CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_DONE_MASK (0x80U)
+#define CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_DONE_SHIFT (7U)
+#define CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_COMMIT_ON_RDWR_MASK (0x20U)
+#define CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_COMMIT_ON_RDWR_SHIFT (5U)
+#define CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_COMMIT_MASK (0x10U)
+#define CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_COMMIT_SHIFT (4U)
+#define CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_AUTO_INCR_MASK (0x8U)
+#define CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_AUTO_INCR_SHIFT (3U)
+#define CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_RDB_WR_MASK (0x4U)
+#define CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_RDB_WR_SHIFT (2U)
+#define CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_SIZE_MASK (0x3U)
+#define CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_SIZE_SHIFT (0U)
+
+
+
+
+typedef uint16_t CPU_INDIRECT_RDB_IND_REGS_CTRL_H16_TYPE;
+
+
+
+
+typedef uint16_t CPU_INDIRECT_RDB_IND_REGS_ADDR_L16_TYPE;
+#define CPU_INDIRECT_RDB_IND_REGS_ADDR_L16_ADDRESS_L16_MASK (0xffffU)
+#define CPU_INDIRECT_RDB_IND_REGS_ADDR_L16_ADDRESS_L16_SHIFT (0U)
+
+
+
+
+typedef uint16_t CPU_INDIRECT_RDB_IND_REGS_ADDR_H16_TYPE;
+#define CPU_INDIRECT_RDB_IND_REGS_ADDR_H16_ADDRESS_H16_MASK (0xffffU)
+#define CPU_INDIRECT_RDB_IND_REGS_ADDR_H16_ADDRESS_H16_SHIFT (0U)
+
+
+
+
+typedef uint16_t CPU_INDIRECT_RDB_IND_REGS_DATA_L_L16_TYPE;
+#define CPU_INDIRECT_RDB_IND_REGS_DATA_L_L16_L16_MASK (0xffffU)
+#define CPU_INDIRECT_RDB_IND_REGS_DATA_L_L16_L16_SHIFT (0U)
+
+
+
+
+typedef uint16_t CPU_INDIRECT_RDB_IND_REGS_DATA_L_H16_TYPE;
+#define CPU_INDIRECT_RDB_IND_REGS_DATA_L_H16_H16_MASK (0xffffU)
+#define CPU_INDIRECT_RDB_IND_REGS_DATA_L_H16_H16_SHIFT (0U)
+
+
+
+
+typedef uint16_t CPU_INDIRECT_RDB_IND_REGS_DATA_H_L16_TYPE;
+#define CPU_INDIRECT_RDB_IND_REGS_DATA_H_L16_L16_MASK (0xffffU)
+#define CPU_INDIRECT_RDB_IND_REGS_DATA_H_L16_L16_SHIFT (0U)
+
+
+
+
+typedef uint16_t CPU_INDIRECT_RDB_IND_REGS_DATA_H_H16_TYPE;
+#define CPU_INDIRECT_RDB_IND_REGS_DATA_H_H16_H16_MASK (0xffffU)
+#define CPU_INDIRECT_RDB_IND_REGS_DATA_H_H16_H16_SHIFT (0U)
+
+
+
+
+typedef volatile struct COMP_PACKED _CPU_INDIRECT_RDBType {
+    CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_TYPE ctrl_ser_l16; /* OFFSET: 0x0 */
+    CPU_INDIRECT_RDB_IND_REGS_CTRL_H16_TYPE ctrl_ser_h16; /* OFFSET: 0x2 */
+    CPU_INDIRECT_RDB_IND_REGS_ADDR_L16_TYPE addr_ser_l16; /* OFFSET: 0x4 */
+    CPU_INDIRECT_RDB_IND_REGS_ADDR_H16_TYPE addr_ser_h16; /* OFFSET: 0x6 */
+    CPU_INDIRECT_RDB_IND_REGS_DATA_L_L16_TYPE data_ser_l_l16; /* OFFSET: 0x8 */
+    CPU_INDIRECT_RDB_IND_REGS_DATA_L_H16_TYPE data_ser_l_h16; /* OFFSET: 0xa */
+    CPU_INDIRECT_RDB_IND_REGS_DATA_H_L16_TYPE data_ser_h_l16; /* OFFSET: 0xc */
+    CPU_INDIRECT_RDB_IND_REGS_DATA_H_H16_TYPE data_ser_h_h16; /* OFFSET: 0xe */
+    CPU_INDIRECT_RDB_IND_REGS_CTRL_L16_TYPE ctrl_cpu_l16; /* OFFSET: 0x10 */
+    CPU_INDIRECT_RDB_IND_REGS_CTRL_H16_TYPE ctrl_cpu_h16; /* OFFSET: 0x12 */
+    CPU_INDIRECT_RDB_IND_REGS_ADDR_L16_TYPE addr_cpu_l16; /* OFFSET: 0x14 */
+    CPU_INDIRECT_RDB_IND_REGS_ADDR_H16_TYPE addr_cpu_h16; /* OFFSET: 0x16 */
+    CPU_INDIRECT_RDB_IND_REGS_DATA_L_L16_TYPE data_cpu_l_l16; /* OFFSET: 0x18 */
+    CPU_INDIRECT_RDB_IND_REGS_DATA_L_H16_TYPE data_cpu_l_h16; /* OFFSET: 0x1a */
+    CPU_INDIRECT_RDB_IND_REGS_DATA_H_L16_TYPE data_cpu_h_l16; /* OFFSET: 0x1c */
+    CPU_INDIRECT_RDB_IND_REGS_DATA_H_H16_TYPE data_cpu_h_h16; /* OFFSET: 0x1e */
+} CPU_INDIRECT_RDBType;
+
+
+#define CPU_INDIRECT_BASE               (0x4B280000UL)
+
+
+
+#define CPU_INDIRECT_MAX_HW_ID          (1UL)
+
+
+#define CPU_INDIRECT_TRANS_SZ_BYTE      (0U )
+
+
+#define CPU_INDIRECT_TRANS_SZ_WORD      (1U )
+
+
+#define CPU_INDIRECT_TRANS_SZ_DWORD     (2U )
+
+
+#define CPU_INDIRECT_TRANS_SZ_QWORD     (3U )
+
+
+#define CPU_INDIRECT_CTRL_CPU_L16_RDB_WR_MASK  (0x0004U)
+
+
+#define CPU_INDIRECT_CTRL_CPU_L16_RDB_WR_SHIFT  (2U )
+
+
+#define CPU_INDIRECT_CPU_READ           (0U )
+
+
+#define CPU_INDIRECT_CPU_WRITE          (1U )
+
+#endif /* CPU_INDIRECT_RDB_H */

@@ -1,0 +1,52 @@
+From 3c36219f3c12ee8dab417b379f4de384560d0943 Mon Sep 17 00:00:00 2001
+From: yangwoo <lee.yw@mobis.co.kr>
+Date: Tue, 5 Nov 2019 09:07:40 +0900
+Subject: [PATCH] Update gpio path for CCU board
+
+---
+ host/utils/hipc/bcm58712/bcm58712_gpio.c | 2 +-
+ host/utils/hipc/bcm58712/bcm58712_gpio.h | 2 +-
+ host/utils/hipc/bcm58712/bcm58712_spi.c  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/host/utils/hipc/bcm58712/bcm58712_gpio.c b/host/utils/hipc/bcm58712/bcm58712_gpio.c
+index ca62b66..3ebf0b7 100644
+--- a/host/utils/hipc/bcm58712/bcm58712_gpio.c
++++ b/host/utils/hipc/bcm58712/bcm58712_gpio.c
+@@ -62,7 +62,7 @@
+ 
+ #define BCM58712_GPIO_NUM_MAX   (31UL)
+ 
+-#define GPIO_CHRDEV_NAME     "/dev/gpiochip1"
++#define GPIO_CHRDEV_NAME     "/dev/gpiochip0"
+ #define GPIO_CONSUMER_NAME      "bcmutild"
+ 
+ static int GPIO_Fd;
+diff --git a/host/utils/hipc/bcm58712/bcm58712_gpio.h b/host/utils/hipc/bcm58712/bcm58712_gpio.h
+index 23faf09..16b75ff 100644
+--- a/host/utils/hipc/bcm58712/bcm58712_gpio.h
++++ b/host/utils/hipc/bcm58712/bcm58712_gpio.h
+@@ -46,6 +46,6 @@
+ #include <stdint.h>
+ 
+ #define GPIO_SYNC_OUT               (0) /* GPIO number? */
+-#define GPIO_SPI_SS                 (6UL)
++#define GPIO_SPI_SS                 (28UL)
+ 
+ #endif /* BCM58712_GPIO_H */
+diff --git a/host/utils/hipc/bcm58712/bcm58712_spi.c b/host/utils/hipc/bcm58712/bcm58712_spi.c
+index da0db64..dd3853c 100644
+--- a/host/utils/hipc/bcm58712/bcm58712_spi.c
++++ b/host/utils/hipc/bcm58712/bcm58712_spi.c
+@@ -120,7 +120,7 @@ void SPI_Deinit()
+ 
+ int32_t SPI_Init(uint32_t dev_id, uint32_t speed_hz)
+ {
+-    char name[] = "/dev/spidev0.0";
++    char name[] = "/dev/spidev1.0";
+     int32_t retVal;
+ 
+     SPI_Fd = open(name, O_RDWR);
+-- 
+2.7.4
+

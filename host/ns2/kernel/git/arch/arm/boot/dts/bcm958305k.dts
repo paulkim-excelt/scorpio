@@ -1,0 +1,264 @@
+/*
+ *  BSD LICENSE
+ *
+ *  Copyright(c) 2017 Broadcom.  All rights reserved.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above copyright
+ *      notice, this list of conditions and the following disclaimer in
+ *      the documentation and/or other materials provided with the
+ *      distribution.
+ *    * Neither the name of Broadcom Corporation nor the names of its
+ *      contributors may be used to endorse or promote products derived
+ *      from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/dts-v1/;
+
+#include "bcm-cygnus.dtsi"
+#include "bcm9hmidc.dtsi"
+
+/ {
+	model = "Cygnus Wireless Audio (BCM958305K)";
+	compatible = "brcm,bcm58305", "brcm,cygnus";
+
+	aliases {
+		serial0 = &uart3;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	sound {
+		compatible = "brcm,cygnussvk-machine";
+		status = "okay";
+
+		brcm,ext-headset-amp-en-gpio = <&gpio_ccm 21 0>;
+		brcm,handsfree-amp-en-gpio = <&gpio_ccm 13 0>;
+		brcm,scslot = <1>; /* 0 = slot 0, all else = 1 */
+
+		dai-link@0 {
+			format = "i2s";
+			bitclock-master = <&dailink0_master>;
+			frame-master = <&dailink0_master>;
+
+			dailink0_master: cpu {
+				sound-dai = <&cygnus_audio 0>;
+			};
+
+			codec {
+				sound-dai = <&bcm_dummy_codec>;
+			};
+		};
+
+		dai-link@1 {
+			format = "i2s";
+			bitclock-master = <&dailink1_master>;
+			frame-master = <&dailink1_master>;
+
+			dailink1_master: cpu {
+				sound-dai = <&cygnus_audio 1>;
+			};
+
+			codec {
+				sound-dai = <&tlv320aic3x>;
+			};
+		};
+
+		dai-link@2 {
+			format = "i2s";
+			bitclock-master = <&dailink2_master>;
+			frame-master = <&dailink2_master>;
+
+			dailink2_master: cpu {
+				sound-dai = <&cygnus_audio 2>;
+			};
+
+			codec {
+				sound-dai = <&wolfson_8750>;
+			};
+		};
+
+		dai-link@3 {
+			format = "i2s";
+			bitclock-master = <&dailink3_master>;
+			frame-master = <&dailink3_master>;
+
+			dailink3_master: cpu {
+				sound-dai = <&cygnus_audio 3>;
+			};
+
+			codec {
+				sound-dai = <&spdif_dummy_tx>;
+			};
+		};
+	};
+
+	bcm_dummy_codec: dummy_codec {
+		#sound-dai-cells = <0>;
+		status = "okay";
+		compatible = "brcm,dummy_codec";
+	};
+
+	/* dummy codec to model spdif tx */
+	spdif_dummy_tx: spdif_tx {
+		#sound-dai-cells = <0>;
+		status = "okay";
+		compatible = "linux,spdif-dit";
+	};
+};
+
+&adc {
+	status = "okay";
+};
+
+&i2c0 {
+	status = "okay";
+};
+
+&i2c1 {
+	status = "okay";
+
+	wolfson_8750: wm8750@1a {
+		#sound-dai-cells = <0>;
+		compatible = "wlf,wm8750";
+		reg = <0x1a>;
+	};
+
+	tlv320aic3x: tlv320aic3x@18 {
+		#sound-dai-cells = <0>;
+		compatible = "ti,tlv320aic3x";
+		reg = <0x18>;
+		ai3x-micbias-vg = <2>;
+		gpio-reset = <&gpio_ccm 22 0>;
+		status = "okay";
+	};
+};
+
+&pcie0 {
+	status = "okay";
+};
+
+&pcie1 {
+	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	brcmf: bcrmf@1 {
+		reg = <0x1>;
+		compatible = "brcm,bcm4329-fmac";
+		status = "okay";
+	};
+};
+
+&uart3 {
+	status = "okay";
+};
+
+&enet {
+	status = "okay";
+};
+
+&nand {
+	nandcs@1 {
+		compatible = "brcm,nandcs";
+		reg = <0>;
+		nand-on-flash-bbt;
+
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		nand-ecc-strength = <24>;
+		nand-ecc-step-size = <1024>;
+
+		brcm,nand-oob-sector-size = <27>;
+	};
+};
+
+&pinctrl {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2s0_default_mux &i2s1_default_mux &i2s2_default_mux>;
+};
+
+&cygnus_audio {
+	#sound-dai-cells = <1>;
+
+	ssp0: ssp_port@0 {
+		status = "okay";
+	};
+
+	ssp1: ssp_port@1 {
+		status = "okay";
+	};
+
+	ssp2: ssp_port@2 {
+		status = "okay";
+	};
+
+	spdif: spdif_port@3 {
+		status = "okay";
+	};
+};
+
+&sdhci0 {
+	status = "okay";
+	no-1-8-v;
+};
+
+&pwm {
+	status = "okay";
+};
+
+&bl {
+	brightness-levels = <0 16 24 32 50 64 128 255>;
+	default-brightness-level = <6>;
+	status = "okay";
+};
+
+&mipipll {
+	assigned-clocks = <&mipipll BCM_CYGNUS_MIPIPLL_CH1_LCD>,
+			  <&mipipll BCM_CYGNUS_MIPIPLL>;
+	assigned-clock-parents = <&mipipll BCM_CYGNUS_MIPIPLL>;
+	assigned-clock-rates = <0>, <2100000000>;
+};
+
+&clcd {
+	clocks =  <&mipipll BCM_CYGNUS_MIPIPLL_CH1_LCD>, <&apb_clk>;
+	clcd-clock-select = <1>;
+
+	port {
+		clcd_pads: endpoint {
+			remote-endpoint = <&clcd_panel>;
+			arm,pl11x,tft-r0g0b0-pads = <0 8 16>;
+		};
+	};
+
+	panel {
+		compatible = "panel-dpi";
+		backlight = <&bl>;
+		port {
+			clcd_panel: endpoint {
+				remote-endpoint = <&clcd_pads>;
+			};
+		};
+	};
+};

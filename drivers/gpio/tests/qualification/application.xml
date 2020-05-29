@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<brcm_cfg>
+    <comp name="gpio_qt">
+        <opt>ENABLE_GPIO_TEST</opt>
+
+        <task name="GPIOIT1_Task">
+            <priority>4</priority>
+            <autostart>false</autostart>
+            <stack>2048</stack>
+        </task>
+    </comp>
+</brcm_cfg>

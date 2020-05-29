@@ -1,0 +1,2 @@
+default:arm,gpiodrv,pinmuxdrv,flashdrv,timdrv,uartdrv,ethcntlr,ethxcvr,ethswitch,ipcdrv,utils,mcudrv,dbgmem
+config1:arm,drivers

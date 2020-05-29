@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:complexType name="cpuType">
+    <xs:sequence>
+        <xs:element name="frequency" type="xs:positiveInteger"/>
+    </xs:sequence>
+    <xs:attribute name= "model" type="xs:string" use="required"/>
+    <xs:attribute name= "family" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="eeCfgType">
+    <xs:sequence>
+        <xs:element name="status" type="xs:string"/>
+        <xs:element name="kernel" type="xs:string"/>
+        <xs:element name="startuphook" type="xs:boolean"/>
+        <xs:element name="pretaskhook" type="xs:boolean"/>
+        <xs:element name="posttaskhook" type="xs:boolean"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="counterType">
+    <xs:sequence>
+        <xs:element name="mincycle" type="xs:positiveInteger"/>
+        <xs:element name="maxallowedvalue" type="xs:positiveInteger"/>
+        <xs:element name="ticksperbase" type="xs:positiveInteger"/>
+        <xs:element name="secondspertick" type="xs:positiveInteger"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="alarmType">
+    <xs:sequence>
+        <xs:element name="autostart" type="xs:boolean"/>
+        <xs:element name="alarmtime" type="xs:nonNegativeInteger"/>
+        <xs:element name="cycletime" type="xs:nonNegativeInteger"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="counter" type="xs:string" use="required"/>
+    <xs:attribute name="callback" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="interruptType">
+    <xs:attribute name= "name" type="xs:string" use="required"/>
+    <xs:attribute name="function" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="wdsSupervisionEntityType">
+    <xs:sequence>
+        <xs:element name= "maxAllowedErrors" type="xs:positiveInteger"/>
+        <xs:element name= "maxState" type="xs:positiveInteger"/>
+        <xs:element name= "maxTransitionsPerState" type="xs:positiveInteger"/>
+        <xs:element name= "errorCallback" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name= "name" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="taskType">
+    <xs:sequence>
+        <xs:element name= "priority" type="xs:positiveInteger"/>
+        <xs:element name= "autostart" type="xs:boolean"/>
+        <xs:element name= "stack" type="xs:positiveInteger"/>
+        <xs:element name="event" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="wdsSE" type="wdsSupervisionEntityType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name= "group" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name= "name" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="cfgType">
+    <xs:attribute name= "mode" type="xs:string" use="optional"/>
+    <xs:attribute name= "pid" type="xs:string" use="required"/>
+    <xs:attribute name= "imgid" type="xs:string" use="required"/>
+    <xs:attribute name= "maxsz" type="xs:string" use="required"/>
+    <xs:attribute name= "file" type="xs:string"/>
+</xs:complexType>
+
+<xs:complexType name="compType">
+    <xs:sequence>
+        <xs:element name="include" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="opt" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="interrupt" type="interruptType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="event" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="task" type="taskType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="counter" type="counterType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="alarm" type="alarmType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="cfg" type="cfgType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="mcuType">
+    <xs:sequence>
+        <xs:element name="cpu" type="cpuType"/>
+    </xs:sequence>
+    <xs:attribute name= "name" type="xs:string" use="required"/>
+    <xs:attribute name= "family" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="appType">
+    <xs:sequence>
+        <xs:element name="board" type="xs:string"/>
+        <xs:element name= "mcu" type="mcuType"/>
+        <xs:element name="irq_stack" type="xs:positiveInteger"/>
+        <xs:element name="compiler" type="xs:string"/>
+        <xs:element name="ee_cfg" type="eeCfgType"/>
+        <xs:element name="opt" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="interrupt" type="interruptType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="event" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="task" type="taskType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="counter" type="counterType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="alarm" type="alarmType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="cfg" type="cfgType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:element name="brcm_cfg">
+  <xs:complexType>
+    <xs:choice>
+        <xs:element name="app" type="appType"/>
+        <xs:element name="comp" type="compType"/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+</xs:schema>

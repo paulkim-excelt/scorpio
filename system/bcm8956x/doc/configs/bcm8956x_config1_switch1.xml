@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+
+<xcvrConfig>
+    <name>bcm89561</name>
+    <jumbo>false</jumbo>
+    <!-- hwPortNum 0 -->
+    <port>
+        <portType>sgmii</portType>
+        <mode>none</mode>
+        <speed>1000</speed>
+        <autoNeg>enabled</autoNeg>
+    </port>
+    <!-- hwPortNum 1 -->
+    <port>
+        <portType>br</portType>
+        <mode>slave</mode>
+        <speed>100</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 2 -->
+    <port>
+        <portType>br</portType>
+        <mode>master</mode>
+        <speed>100</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 3 -->
+    <port>
+        <portType>br</portType>
+        <mode>master</mode>
+        <speed>100</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 4 -->
+    <port>
+        <portType>br</portType>
+        <mode>master</mode>
+        <speed>100</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 5 -->
+    <port>
+        <portType>sgmii</portType>
+        <mode>none</mode>
+        <speed>1000</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 6 -->
+    <port>
+        <portType>pcie</portType>
+        <mode>none</mode>
+        <speed>1000</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 7 (internal port) -->
+    <port>
+        <portType>none</portType>
+        <mode>master</mode>
+        <speed>1000</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 8 -->
+    <port>
+        <portType>sgmii</portType>
+        <mode>none</mode>
+        <speed>1000</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 9 -->
+    <port>
+        <portType>none</portType>
+        <mode>none</mode>
+        <speed>10</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 10 -->
+    <port>
+        <portType>none</portType>
+        <mode>none</mode>
+        <speed>10</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 11 -->
+    <port>
+        <portType>none</portType>
+        <mode>none</mode>
+        <speed>10</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 12 -->
+    <port>
+        <portType>none</portType>
+        <mode>none</mode>
+        <speed>10</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 13 -->
+    <port>
+        <portType>none</portType>
+        <mode>none</mode>
+        <speed>10</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 14 -->
+    <port>
+        <portType>none</portType>
+        <mode>none</mode>
+        <speed>10</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+    <!-- hwPortNum 15 -->
+    <port>
+        <portType>none</portType>
+        <mode>none</mode>
+        <speed>10</speed>
+        <autoNeg>disabled</autoNeg>
+    </port>
+</xcvrConfig>

@@ -1,0 +1,9 @@
+if ARCH_IPROC
+
+config NS2
+	bool "NORTHSTAR2 family"
+	select ARM64
+
+source "arch/arm/mach-iproc/ns2/Kconfig"
+
+endif

@@ -1,0 +1,10 @@
+/bin/login
+/usr/bin/passwd
+/bin/su
+/usr/bin/vlock
+/usr/bin/crontab
+/bin/ping
+/bin/ping6
+/usr/bin/traceroute
+/usr/bin/traceroute6
+/bin/mount

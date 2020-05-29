@@ -1,0 +1,409 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:simpleType name ="COMMS_PortMaskType">
+    <xs:restriction base = "xs:string">
+    <xs:pattern value = "0x[0-9A-Fa-f]{4}"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "COMMS_MACAddrType">
+    <xs:restriction base = "xs:string">
+        <xs:maxLength value="17" />
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "COMMS_VLANIDType">
+    <xs:restriction base = "xs:unsignedInt">
+        <xs:minInclusive value = "0"/>
+        <xs:maxInclusive value = "4094"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "COMMS_PCPType">
+    <xs:restriction base = "xs:unsignedInt">
+        <xs:minInclusive value = "0"/>
+        <xs:maxInclusive value = "7"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "COMMS_PortType">
+    <xs:restriction base = "xs:string">
+        <xs:enumeration value = "standard"/>
+        <xs:enumeration value = "host"/>
+        <xs:enumeration value = "uplink"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name  = "COMMS_PortPolicerActType">
+    <xs:restriction base = "xs:string">
+        <xs:enumeration value = "block"/>
+        <xs:enumeration value = "drop"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "COMMS_SchedAlgoType">
+    <xs:restriction base = "xs:string">
+        <xs:enumeration value = "SP"/>
+        <xs:enumeration value = "WRR"/>
+        <xs:enumeration value = "DRR"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "COMMS_PolicerPacketFlgMaskType">
+    <xs:restriction base = "xs:string">
+        <xs:enumeration value = "unicast-lookup-hit"/>
+        <xs:enumeration value = "multicast-lookup-hit"/>
+        <xs:enumeration value = "reserved_multicast-lookup-hit"/>
+        <xs:enumeration value = "broadcast-lookup-hit"/>
+        <xs:enumeration value = "multicast-lookup-failed"/>
+        <xs:enumeration value = "unicast-lookup-failed"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name = "COMMS_SwitchType">
+    <xs:restriction base = "xs:string">
+        <xs:enumeration value = "standard"/>
+        <xs:enumeration value = "master"/>
+        <xs:enumeration value = "slave"/>
+    </xs:restriction>
+</xs:simpleType>
+
+
+<xs:complexType name = "COMMS_PortPolicerCfgType">
+    <xs:sequence>
+        <xs:element
+            name = "pktMask"
+            type = "COMMS_PolicerPacketFlgMaskType"
+        />
+        <xs:element
+            name = "rateByteCount"
+            type = "xs:unsignedInt"
+        />
+        <xs:element
+            name = "rateTimeInterval"
+            type = "xs:unsignedInt"
+        />
+        <xs:element
+            name = "action"
+            type = "COMMS_PortPolicerActType"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_PortIngressCfgType">
+    <xs:sequence>
+        <xs:element
+            name = "defaultVLAN"
+            type = "COMMS_VLANIDType"
+        />
+        <xs:element
+            name = "defaultPrio"
+            type = "COMMS_PCPType"
+        />
+        <xs:element
+            name = "dropUntagged"
+            type = "xs:boolean"
+        />
+        <xs:element
+            name = "tc"
+            type = "COMMS_PCPType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "policerEn"
+            type = "xs:boolean"
+            minOccurs = "0"
+            default = "false"
+        />
+        <xs:element
+            name = "policer"
+            type = "COMMS_PortPolicerCfgType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "pcp2tcMap"
+            type = "COMMS_PCPType"
+            minOccurs = "0"
+            maxOccurs = "8"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_PortSchType">
+    <xs:sequence>
+        <xs:element
+            name = "algo"
+            type = "COMMS_SchedAlgoType"
+            minOccurs = "8"
+            maxOccurs = "8"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_ShaperCfgType">
+    <xs:sequence>
+        <xs:element
+            name = "rateBps"
+            type = "xs:unsignedInt"
+        />
+        <xs:element
+            name = "burstBytes"
+            type = "xs:unsignedInt"
+        />
+        <xs:element
+            name = "avbShapingModeEn"
+            type = "xs:boolean"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_FifoCfgType">
+    <xs:sequence>
+        <xs:element
+            name = "id"
+            type = "xs:unsignedInt"
+        />
+        <xs:element
+            name = "minLen"
+            type = "xs:unsignedInt"
+        />
+        <xs:element
+            name = "tc"
+            type = "COMMS_PCPType"
+        />
+        <xs:element
+            name = "shaper"
+            type = "COMMS_ShaperCfgType"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_FifoCfgListType">
+    <xs:sequence>
+        <xs:element
+            name = "fifo"
+            type = "COMMS_FifoCfgType"
+            minOccurs = "1"
+            maxOccurs = "8"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_PortEgressCfgType">
+    <xs:sequence>
+        <xs:element
+            name = "fifoList"
+            type = "COMMS_FifoCfgListType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "scheduler"
+            type = "COMMS_PortSchType"
+        />
+        <xs:element
+            name = "pcpRemarkEn"
+            type = "xs:boolean"
+        />
+        <xs:element
+            name = "tc2pcpMap"
+            type = "COMMS_PCPType"
+            minOccurs = "0"
+            maxOccurs = "8"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_SwitchPortConfigType">
+    <xs:sequence>
+        <xs:element
+            name = "role"
+            type = "COMMS_PortType"
+        />
+        <xs:element
+            name = "enableTimeStamp"
+            type = "xs:boolean"
+            minOccurs = "0"
+            default = "false"
+        />
+        <xs:element
+            name = "enableJumboFrm"
+            type = "xs:boolean"
+            minOccurs = "0"
+            default = "false"
+        />
+        <xs:element
+            name = "ingressCfg"
+            type = "COMMS_PortIngressCfgType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "egressCfg"
+            type = "COMMS_PortEgressCfgType"
+            minOccurs = "0"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_PortConfigType">
+    <xs:sequence>
+        <xs:element
+            name = "portID"
+            type = "xs:unsignedInt"
+        />
+        <xs:element
+            name = "switchPortCfg"
+            type = "COMMS_SwitchPortConfigType"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_PortCfgListType">
+    <xs:sequence>
+        <xs:element
+            name = "portCfg"
+            type = "COMMS_PortConfigType"
+            minOccurs = "1"
+            maxOccurs = "16"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_StreamPolicerCfgType">
+    <xs:sequence>
+        <xs:element
+            name = "rate"
+            type = "xs:unsignedInt"
+        />
+        <xs:element
+            name = "burstSize"
+            type = "xs:unsignedInt"
+        />
+        <xs:element
+            name = "ingressPortMask"
+            type = "COMMS_PortMaskType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "dropThreshold"
+            type = "xs:unsignedInt"
+        />
+        <xs:element
+            name = "monitoringInterval"
+            type = "xs:unsignedInt"
+        />
+        <xs:element
+            name = "block"
+            type = "xs:boolean"
+        />
+        <xs:element
+            name = "report"
+            type = "xs:boolean"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_StreamPolicerListType">
+    <xs:sequence>
+        <xs:element
+            name = "policer"
+            type = "COMMS_StreamPolicerCfgType"
+            minOccurs = "1"
+            maxOccurs = "16"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_StreamEntryType">
+    <xs:sequence>
+        <xs:element
+            name = "macAddress"
+            type = "COMMS_MACAddrType"
+        />
+        <xs:element
+            name = "vlan"
+            type = "COMMS_VLANIDType"
+        />
+        <xs:element
+            name = "destinationPortMask"
+            type = "COMMS_PortMaskType"
+        />
+        <xs:element
+            name = "policerList"
+            type = "COMMS_StreamPolicerListType"
+            minOccurs = "0">
+                <xs:unique name="uniqueIngressPortMask">
+                    <xs:selector xpath = "policer" />
+                    <xs:field xpath = "ingressPortMask" />
+                </xs:unique>
+        </xs:element>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_StreamTableType">
+    <xs:sequence>
+        <xs:element
+            name = "stream"
+            type = "COMMS_StreamEntryType"
+            minOccurs = "1"
+            maxOccurs = "512"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_VLANEntryType">
+    <xs:sequence>
+        <xs:element
+            name = "vlan"
+            type = "COMMS_VLANIDType"
+        />
+        <xs:element
+            name = "portMask"
+            type = "COMMS_PortMaskType"
+        />
+        <xs:element
+            name = "tagMask"
+            type = "COMMS_PortMaskType"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_VLANTableType">
+    <xs:sequence>
+        <xs:element
+            name = "vid"
+            type = "COMMS_VLANEntryType"
+            minOccurs = "1"
+            maxOccurs = "512"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name = "COMMS_ConfigType">
+    <xs:sequence>
+        <xs:element
+            name = "portCfgList"
+            type = "COMMS_PortCfgListType"
+        />
+        <xs:element
+            name = "switchType"
+            type = "COMMS_SwitchType"
+        />
+        <xs:element
+            name = "streamTable"
+            type = "COMMS_StreamTableType"
+            minOccurs = "0"
+        />
+        <xs:element
+            name = "vidTable"
+            type = "COMMS_VLANTableType"
+            minOccurs = "0"
+        />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:element
+    name = "COMMS_Cfg"
+    type = "COMMS_ConfigType"
+    />
+</xs:schema>

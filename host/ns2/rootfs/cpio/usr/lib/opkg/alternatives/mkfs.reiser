@@ -1,0 +1,2 @@
+/sbin/mkfs.reiser
+/bin/busybox.nosuid 50

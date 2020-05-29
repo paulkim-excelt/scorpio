@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<brcm_cfg>
+    <comp name="otp_qt">
+        <opt>ENABLE_OTP_TEST</opt>
+
+        <task name="OtpIT1_Task">
+            <priority>2</priority>
+            <autostart>false</autostart>
+            <stack>2048</stack>
+        </task>
+
+    </comp>
+</brcm_cfg>

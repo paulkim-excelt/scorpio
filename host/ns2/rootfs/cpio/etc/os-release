@@ -1,0 +1,5 @@
+ID="poky"
+NAME="Poky (Yocto Project Reference Distro)"
+VERSION="2.4+snapshot-20190920 (master)"
+VERSION_ID="2.4-snapshot-20190920"
+PRETTY_NAME="Poky (Yocto Project Reference Distro) 2.4+snapshot-20190920 (master)"

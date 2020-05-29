@@ -1,0 +1,1 @@
+arch_compat: bcm958712d4xmc: all any noarch aarch64 bcm958712d4xmc aarch32hf_neon_fp_armv8

@@ -1,0 +1,402 @@
+/*
+ *  BSD LICENSE
+ *
+ *  Copyright(c) 2015 Broadcom Corporation.  All rights reserved.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above copyright
+ *      notice, this list of conditions and the following disclaimer in
+ *      the documentation and/or other materials provided with the
+ *      distribution.
+ *    * Neither the name of Broadcom Corporation nor the names of its
+ *      contributors may be used to endorse or promote products derived
+ *      from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/dts-v1/;
+
+#include "ns2.dtsi"
+
+/ {
+	model = "Broadcom NS2 CUP";
+	compatible = "brcm,ns2-cup", "brcm,ns2";
+
+	aliases {
+		serial0 = &uart3;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+		bootargs = "earlycon=uart8250,mmio32,0x66130000";
+	};
+
+	pcie1: pcie@20030000 {
+		compatible = "brcm,iproc-pcie";
+		reg = <0 0x20030000 0 0x1000>;
+
+		#interrupt-cells = <1>;
+		interrupt-map-mask = <0 0 0 0>;
+		interrupt-map = <0 0 0 0 &gic 0 GIC_SPI 287 IRQ_TYPE_NONE>;
+
+		linux,pci-domain = <1>;
+
+		bus-range = <0x00 0xff>;
+
+		#address-cells = <3>;
+		#size-cells = <2>;
+		device_type = "pci";
+		ranges = <0x83000000 0 0x8000000 0 0x8000000 0 0x8000000>;
+
+		brcm,pcie-ob;
+		brcm,pcie-ob-oarr-size;
+		brcm,pcie-ob-axi-offset = <0x8000000>;
+		brcm,pcie-ob-window-size = <128>;
+
+		phys = <&pci_phy0>;
+		phy-names = "pcie-phy";
+
+		msi-parent = <&v2m0>;
+	};
+
+	pcie2: pcie@20040000 {
+		compatible = "brcm,iproc-pcie";
+		reg = <0 0x20040000 0 0x1000>;
+
+		#interrupt-cells = <1>;
+		interrupt-map-mask = <0 0 0 0>;
+		interrupt-map = <0 0 0 0 &gic 0 GIC_SPI 293 IRQ_TYPE_NONE>;
+
+		linux,pci-domain = <2>;
+
+		bus-range = <0x00 0xff>;
+
+		#address-cells = <3>;
+		#size-cells = <2>;
+		device_type = "pci";
+		ranges = <0x83000000 0 0x10000000 0 0x10000000 0 0x8000000>;
+
+		brcm,pcie-ob;
+		brcm,pcie-ob-oarr-size;
+		brcm,pcie-ob-axi-offset = <0x10000000>;
+		brcm,pcie-ob-window-size = <128>;
+
+		phys = <&pci_phy0>;
+		phy-names = "pcie-phy";
+
+		msi-parent = <&v2m0>;
+	};
+
+	pcie3: pcie@20050000 {
+		compatible = "brcm,iproc-pcie";
+		reg = <0 0x20050000 0 0x1000>;
+
+		#interrupt-cells = <1>;
+		interrupt-map-mask = <0 0 0 0>;
+		interrupt-map = <0 0 0 0 &gic 0 GIC_SPI 299 IRQ_TYPE_NONE>;
+
+		linux,pci-domain = <3>;
+
+		bus-range = <0x00 0xff>;
+
+		#address-cells = <3>;
+		#size-cells = <2>;
+		device_type = "pci";
+		ranges = <0x83000000 0 0x18000000 0 0x18000000 0 0x8000000>;
+
+		brcm,pcie-ob;
+		brcm,pcie-ob-oarr-size;
+		brcm,pcie-ob-axi-offset = <0x18000000>;
+		brcm,pcie-ob-window-size = <128>;
+
+		phys = <&pci_phy0>;
+		phy-names = "pcie-phy";
+
+		msi-parent = <&v2m0>;
+	};
+};
+
+&soc {
+	usb3_hst_ctrl0: syscon@66300e00 {
+		compatible = "brcm,ns2-xhci0-histogram", "syscon";
+		reg = <0x66300e00 0x1ac>;
+	};
+
+	usb3_hst_ctrl1: syscon@66310e00 {
+		compatible = "brcm,ns2-xhci1-histogram", "syscon";
+		reg = <0x66310e00 0x1ac>;
+	};
+};
+
+&ehci0 {
+	status = "okay";
+};
+
+&ehci1 {
+	status = "okay";
+};
+
+&ehci2 {
+	status = "okay";
+};
+
+&enet {
+	status = "okay";
+};
+
+&ohci0 {
+	status = "okay";
+};
+
+&ohci1 {
+	status = "okay";
+};
+
+&ohci2 {
+	status = "okay";
+};
+
+&pci_phy0 {
+	status = "okay";
+};
+
+&pci_phy1 {
+	status = "okay";
+};
+
+&pcie0 {
+	ranges = <0x83000000 0 0x00000000 0 0x00000000 0 0x8000000>;
+	brcm,pcie-ob-window-size = <128>;
+	status = "okay";
+};
+
+&pcie4 {
+	status = "okay";
+};
+
+&pcie8 {
+	status = "okay";
+};
+
+&i2c0 {
+	status = "okay";
+};
+
+&i2c1 {
+	status = "okay";
+};
+
+&uart3 {
+	status = "okay";
+};
+
+&ssp0 {
+	status = "okay";
+
+	slic@0 {
+		compatible = "silabs,si3226x";
+		reg = <0>;
+		spi-max-frequency = <5000000>;
+		spi-cpha = <1>;
+		spi-cpol = <1>;
+		pl022,hierarchy = <0>;
+		pl022,interface = <0>;
+		pl022,slave-tx-disable = <0>;
+		pl022,com-mode = <0>;
+		pl022,rx-level-trig = <1>;
+		pl022,tx-level-trig = <1>;
+		pl022,ctrl-len = <11>;
+		pl022,wait-state = <0>;
+		pl022,duplex = <0>;
+	};
+};
+
+&ssp1 {
+	status = "okay";
+
+	at25@0 {
+		compatible = "atmel,at25";
+		reg = <0>;
+		spi-max-frequency = <5000000>;
+		at25,byte-len = <0x8000>;
+		at25,addr-mode = <2>;
+		at25,page-size = <64>;
+		spi-cpha = <1>;
+		spi-cpol = <1>;
+		pl022,hierarchy = <0>;
+		pl022,interface = <0>;
+		pl022,slave-tx-disable = <0>;
+		pl022,com-mode = <0>;
+		pl022,rx-level-trig = <1>;
+		pl022,tx-level-trig = <1>;
+		pl022,ctrl-len = <11>;
+		pl022,wait-state = <0>;
+		pl022,duplex = <0>;
+	};
+};
+
+&sata_phy0 {
+	status = "okay";
+};
+
+&sata_phy1 {
+	status = "okay";
+};
+
+&sata {
+	status = "okay";
+};
+
+&sdio0 {
+	status = "okay";
+};
+
+&sdio1 {
+	status = "okay";
+};
+
+&nand {
+	nandcs@0 {
+		compatible = "brcm,nandcs";
+		reg = <0>;
+		nand-ecc-mode = "hw";
+		nand-ecc-strength = <30>;
+		nand-ecc-step-size = <1024>;
+		nand-bus-width = <8>;
+		brcm,nand-oob-sector-size = <27>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+		partition@0 {
+			label = "nboot";
+			reg = <0x00000000 0x00280000>;
+			read-only;
+		};
+
+		partition@280000 {
+			label = "nenv";
+			reg = <0x00280000 0x00040000>;
+			read-only;
+		};
+
+		partition@2c0000 {
+			label = "ndtb";
+			reg = <0x002c0000 0x00040000>;
+			read-only;
+		};
+
+		partition@300000 {
+			label = "nsystem";
+			reg = <0x00300000 0x03d00000>;
+			read-only;
+		};
+
+		partition@4000000 {
+			label = "nrootfs";
+			reg = <0x04000000 0x3c000000>;
+		};
+	};
+};
+
+&mdio_mux_iproc {
+	mdio@10 {
+		gphy0: eth-phy@10 {
+			reg = <0x10>;
+		};
+		ext10gphy0: eth-phy@1E {
+			compatible = "ethernet-phy-idAE02.5040",
+				     "ethernet-phy-ieee802.3-c45";
+			reg = <0x1E>;
+		};
+	};
+};
+
+&pinctrl {
+	pinctrl-names = "default";
+	pinctrl-0 = <&nand_sel &gpio_sel &pwm_sel>;
+	nand_sel: nand_sel {
+		function = "nand";
+		groups = "nand_grp";
+	};
+
+	gpio_sel: gpio_sel {
+		function = "gpio";
+		groups = "gpio_0_1_grp","gpio_20_21_grp";
+	};
+
+	pwm_sel: pwm_sel {
+		function = "pwm";
+		groups = "pwm_0_grp", "pwm_1_grp";
+	};
+};
+
+&pwm {
+	status = "okay";
+};
+
+&qspi {
+	bspi-sel = <0>;
+	flash: n25q256a@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "n25q256a","jedec,spi-nor";
+		reg = <0x0>;
+		spi-max-frequency = <54000000>;
+		m25p,fast-read;
+		spi-cpol;
+		spi-cpha;
+	};
+};
+
+&udc_dwc {
+	status = "okay";
+};
+
+&usb2_phy0 {
+	brcm,ns2-inv-ppc-pol = <1>;
+	status = "okay";
+};
+
+&usb2_phy1 {
+	status = "okay";
+};
+
+&usb3_phy0 {
+	brcm,ns2-inv-vbus-ppc-pol = <1>;
+	hist-syscon = <&usb3_hst_ctrl0>;
+	status = "okay";
+
+};
+
+&usb3_phy1 {
+	hist-syscon = <&usb3_hst_ctrl1>;
+	status = "okay";
+};
+
+&usbdrd_phy {
+	id-gpios = <&gpio_g 20 0>;
+	status = "okay";
+};
+
+&rtc {
+	status = "okay";
+};
+
+&xhci0 {
+	status = "okay";
+};

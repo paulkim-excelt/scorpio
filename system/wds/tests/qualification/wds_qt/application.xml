@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<brcm_cfg>
+    <comp name="wds_qt">
+        <task name="WDSTest1">
+            <priority>10</priority>
+            <autostart>false</autostart>
+            <stack>2048</stack>
+            <event>SystemEvent0</event>
+            <wdsSE name="SE1">
+                <maxAllowedErrors>10</maxAllowedErrors>
+                <maxState>3</maxState>
+                <maxTransitionsPerState>1</maxTransitionsPerState>
+                <errorCallback>WDS_QT_ErrCallback</errorCallback>
+            </wdsSE>
+        </task>
+        <task name="WDSTest2">
+            <priority>9</priority>
+            <autostart>false</autostart>
+            <stack>2048</stack>
+            <event>SystemEvent0</event>
+            <wdsSE name="SE2">
+                <maxAllowedErrors>10</maxAllowedErrors>
+                <maxState>4</maxState>
+                <maxTransitionsPerState>2</maxTransitionsPerState>
+                <errorCallback>WDS_QT_ErrCallback</errorCallback>
+            </wdsSE>
+        </task>
+        <task name="WDSTest3">
+            <priority>8</priority>
+            <autostart>false</autostart>
+            <stack>2048</stack>
+            <event>SystemEvent0</event>
+            <wdsSE name="SE3">
+                <maxAllowedErrors>10</maxAllowedErrors>
+                <maxState>1</maxState>
+                <maxTransitionsPerState>1</maxTransitionsPerState>
+                <errorCallback>WDS_QT_ErrCallback</errorCallback>
+            </wdsSE>
+        </task>
+        <task name="WDSTestMonitor">
+            <priority>11</priority>
+            <autostart>false</autostart>
+            <stack>2048</stack>
+            <event>SystemEvent0</event>
+        </task>        
+        <alarm name="WDSTestAlarm" counter="SystemTimer" callback="WDSTestAlarm_cb">
+            <autostart>true</autostart>
+            <alarmtime>16</alarmtime>
+            <cycletime>16</cycletime>
+        </alarm>
+    </comp>
+</brcm_cfg>
+

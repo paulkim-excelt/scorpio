@@ -1,0 +1,2 @@
+/usr/bin/ipcrm
+/bin/busybox.nosuid 50

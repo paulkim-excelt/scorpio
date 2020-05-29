@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<brcm_cfg>
+    <comp name="utils_qt">
+    </comp>
+</brcm_cfg>

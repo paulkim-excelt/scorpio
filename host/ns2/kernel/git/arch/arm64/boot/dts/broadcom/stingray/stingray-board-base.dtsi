@@ -1,0 +1,303 @@
+/*
+ *  BSD LICENSE
+ *
+ *  Copyright(c) 2016-2017 Broadcom.  All rights reserved.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above copyright
+ *      notice, this list of conditions and the following disclaimer in
+ *      the documentation and/or other materials provided with the
+ *      distribution.
+ *    * Neither the name of Broadcom nor the names of its
+ *      contributors may be used to endorse or promote products derived
+ *      from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#ifndef ENABLE_EMMC
+#define ENABLE_EMMC	1
+#endif
+
+#ifndef ENABLE_ENET
+#define ENABLE_ENET	1
+#endif
+
+#ifndef ENABLE_NAND
+#define ENABLE_NAND	0
+#endif
+
+#ifndef ENABLE_PAXC
+#define ENABLE_PAXC	1
+#endif
+
+#ifndef ENABLE_PWM
+#define ENABLE_PWM	0
+#endif
+
+#ifndef ENABLE_SDCARD
+#define ENABLE_SDCARD	0
+#endif
+
+#ifndef ENABLE_USB0
+#define ENABLE_USB0	1
+#endif
+
+#ifndef ENABLE_USB1
+#define ENABLE_USB1	1
+#endif
+
+#ifndef NUM_PAXB
+#define NUM_PAXB	8
+#endif
+
+#include "stingray.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+
+#if (ENABLE_PAXB_IOMMU == 1)
+#define PCIE_DMA_RANGES dma-ranges = < \
+	0x43000000 0x00 0x00000000 0x00 0x00000000 0x04 0x00000000 \
+	0x43000000 0x08 0x00000000 0x08 0x00000000 0x08 0x00000000 \
+	0x43000000 0x80 0x00000000 0x80 0x00000000 0x80 0x00000000>
+#define PCIE_RESERVED_DMA_REGIONS \
+	#region-address-cells = <2>; \
+	#region-size-cells = <2>; \
+	reserved-dma-region = <0x0 0x0 0x04 0x0 0x04 0x0 \
+			       0x0 0x0 0x10 0x0 0x70 0x0>
+#else
+#define PCIE_DMA_RANGES dma-ranges = < \
+	0x43000000 0x00 0x80000000 0x00 0x80000000 0x00 0x80000000 \
+	0x43000000 0x08 0x00000000 0x08 0x00000000 0x08 0x00000000 \
+	0x43000000 0x80 0x00000000 0x80 0x00000000 0x40 0x00000000>
+#endif
+
+/ {
+	aliases {
+		serial0 = &uart1;
+		serial1 = &uart0;
+		serial2 = &uart2;
+		serial3 = &uart3;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+#if (ENABLE_PAXC_IOMMU == 0)
+/*
+ * When standard IOMMU is disabled for PAXC, one needs to enable IOMMU
+ * identity mapping for PAXC on SR A2. In this case, below DDR region
+ * needs to be reserved for SMMU map table created for identity mapping.
+ */
+		smmu_pg_region {
+			reg = <0x8 0x80000000 0x0 0x200000>;
+			no-map;
+		};
+#endif
+#if (ENABLE_PAXB_IOMMU == 1)
+		cmem_region: cmem_region@90000000 {
+			reg = <0x0 0x90000000 0x0 0x1000000>;
+			no-map;
+		};
+#endif
+	};
+#if (ENABLE_PAXB_IOMMU == 1)
+	cmem: cmem@0 {
+		compatible = "mmap-cmem";
+		memory-region = <&cmem_region>;
+	};
+#endif
+};
+
+&memory {
+	reg = <0x00000000 0x80000000 0x0 0x80000000>, /* 2G @ 2G */
+	      <0x00000008 0x80000000 0x1 0x80000000>; /* 6G @ 34G */
+};
+
+&pcie0 {
+	PCIE_DMA_RANGES;
+#if (ENABLE_PAXB_IOMMU == 1)
+	PCIE_RESERVED_DMA_REGIONS;
+#endif
+};
+
+&pcie1 {
+	PCIE_DMA_RANGES;
+#if (ENABLE_PAXB_IOMMU == 1)
+	PCIE_RESERVED_DMA_REGIONS;
+#endif
+};
+
+&pcie2 {
+	PCIE_DMA_RANGES;
+#if (ENABLE_PAXB_IOMMU == 1)
+	PCIE_RESERVED_DMA_REGIONS;
+#endif
+};
+
+&pcie3 {
+	PCIE_DMA_RANGES;
+#if (ENABLE_PAXB_IOMMU == 1)
+	PCIE_RESERVED_DMA_REGIONS;
+#endif
+};
+
+&pcie4 {
+	PCIE_DMA_RANGES;
+#if (ENABLE_PAXB_IOMMU == 1)
+	PCIE_RESERVED_DMA_REGIONS;
+#endif
+};
+
+&pcie5 {
+	PCIE_DMA_RANGES;
+#if (ENABLE_PAXB_IOMMU == 1)
+	PCIE_RESERVED_DMA_REGIONS;
+#endif
+};
+
+&pcie6 {
+	PCIE_DMA_RANGES;
+#if (ENABLE_PAXB_IOMMU == 1)
+	PCIE_RESERVED_DMA_REGIONS;
+#endif
+};
+
+&pcie7 {
+	PCIE_DMA_RANGES;
+#if (ENABLE_PAXB_IOMMU == 1)
+	PCIE_RESERVED_DMA_REGIONS;
+#endif
+};
+
+&enet {
+	phy-mode = "rgmii-id";
+	phy-handle = <&gphy0>;
+#if (ENABLE_ENET == 1)
+	status = "okay";
+#endif
+};
+
+&uart1 {
+	status = "okay";
+};
+
+&uart2 {
+#if (ENABLE_UART2 == 1)
+	status = "okay";
+#endif
+};
+
+&uart3 {
+#if (ENABLE_UART3 == 1)
+	status = "okay";
+#endif
+};
+
+&sdio0 {
+#if (ENABLE_EMMC == 1)
+	non-removable;
+	full-pwr-cycle;
+	status = "okay";
+#endif
+};
+
+&sdio1 {
+#if (ENABLE_SDCARD == 1)
+	full-pwr-cycle;
+	status = "okay";
+#endif
+};
+
+&pwm {
+#if (ENABLE_PWM == 1)
+	status = "okay";
+#endif
+};
+
+&ssp0 {
+	cs-gpios = <&gpio_hsls 34 0>;
+#if (ENABLE_SSP0 == 1)
+	status = "okay";
+#endif
+};
+
+&ssp1 {
+	cs-gpios = <&gpio_hsls 96 0>;
+#if (ENABLE_SSP1 == 1)
+	status = "okay";
+#endif
+};
+
+&i2c0 {
+#if (ENABLE_I2C0 == 1)
+	status = "okay";
+#endif
+};
+
+&i2c1 {
+#if (ENABLE_I2C1 == 1)
+	status = "okay";
+#endif
+};
+
+&mdio_mux_iproc {
+	mdio@10 {
+#if (ENABLE_ENET == 1)
+		status = "okay";
+#endif
+		gphy0: eth-phy@10 {
+			reg = <0x10>;
+		};
+	};
+};
+
+&nand {
+#if (ENABLE_NAND == 1)
+	status = "ok";
+#endif
+};
+
+&qspi {
+	pinctrl-names = "default";
+	pinctrl-0 = <&qspi_pins>;
+	bspi-sel = <0>;
+/* reserve QSPI for Chimp NVRAM when PAXC is enabled */
+#if (ENABLE_PAXC != 1)
+	status = "okay";
+#endif
+
+	flash: w25q64@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "jedec,spi-nor";
+		reg = <0x0>;
+		spi-max-frequency = <12500000>;
+	};
+};
+
+&rtc {
+#if (ENABLE_RTC == 1)
+	status = "okay";
+#endif
+};

@@ -1,0 +1,57 @@
+From 2e950aab38fc2638d01fe4a0ab044c2703b2f661 Mon Sep 17 00:00:00 2001
+From: Vinay Krishnamurthy <vinay.krishnamurthy@broadcom.com>
+Date: Tue, 15 Oct 2019 10:15:38 +0530
+Subject: [PATCH] Bug fix in the PCIe driver
+
+Fixed following bugs:
+1. Corruption for > 128 bytes packet transfer.
+2. Forcefully link up by writing to MII_CTL register.
+3. Dont advertise multi MSI
+
+Jira-ID: SWAUTO-8255
+Dev-TestCase: Verified PCIe operations on NS2 board by simulating
+              the behavior similar to NXP board.
+
+Change-Id: I43924b51ddbab6fc3bfa63be7f9ab7aa279a305d
+Signed-off-by: Vinay Krishnamurthy <vinay.krishnamurthy@broadcom.com>
+---
+
+diff --git a/kernel/drivers/net/ethernet/broadcom/xgbe/xgbe-main.c b/kernel/drivers/net/ethernet/broadcom/xgbe/xgbe-main.c
+index f08cfa2..2c9cb4c 100644
+--- a/kernel/drivers/net/ethernet/broadcom/xgbe/xgbe-main.c
++++ b/kernel/drivers/net/ethernet/broadcom/xgbe/xgbe-main.c
+@@ -154,7 +154,7 @@
+ 	DBGPR("-->xgbe_default_config\n");
+ 
+ 	pdata->blen = DMA_SBMR_BLEN_32;
+-	pdata->pbl = DMA_PBL_32;
++	pdata->pbl = DMA_PBL_16;
+ 	pdata->aal = 0;
+ 	pdata->rd_osr_limit = 12;
+ 	pdata->wr_osr_limit = 3;
+diff --git a/kernel/drivers/net/ethernet/broadcom/xgbe/xgbe-pci.c b/kernel/drivers/net/ethernet/broadcom/xgbe/xgbe-pci.c
+index 8e79299..c3a98e9 100644
+--- a/kernel/drivers/net/ethernet/broadcom/xgbe/xgbe-pci.c
++++ b/kernel/drivers/net/ethernet/broadcom/xgbe/xgbe-pci.c
+@@ -178,9 +178,12 @@
+ {
+ 	int ret;
+ 
++/*
++    Not required for NXP board
+ 	ret = xgbe_config_multi_msi(pdata);
+ 	if (!ret)
+ 		goto out;
++*/
+ 	ret = pci_alloc_irq_vectors(pdata->pcidev, 1, 1,
+ 				    PCI_IRQ_MSI);
+ 	if (ret < 0) {
+@@ -260,6 +263,8 @@
+ 
+ 	pdata->xgmac_regs = iomap_table[XGBE_XGMAC_BAR];
+ 
++    /* Write to the MII_CTL to forcefully link up */
++    XGMAC_IOWRITE(pdata, 0x4, 0x7);
+     XGMAC_IOWRITE(pdata, 0x8, 0xe00);
+ 
+ 	pdata->xgmac_regs += 0x2000;
